@@ -1,4 +1,4 @@
-package Buildweek2.Address;
+package Buildweek2.address;
 
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/adress")
 public class AddressesController {
-  @Autowired
-  AddressesService addressesService;
+    @Autowired
+    AddressesService addressesService;
 
-  @PutMapping("")
-  @PreAuthorize("hasAuthority('ADMIN')")
-  public Address addEvent(@AuthenticationPrincipal User admin, long address_id, @RequestBody @Validated AddressDTO body, BindingResult validation) {
-    if (validation.hasErrors()) {
-      throw new BadRequestException("Empty or not respected fields", validation.getAllErrors());
-    } else {
-      try {
-        return addressesService.findByIdAndUpdate(admin.getId(), address_id, body);
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+    @PutMapping("")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Address addEvent(@AuthenticationPrincipal User admin, long address_id, @RequestBody @Validated AddressDTO body, BindingResult validation) {
+        if (validation.hasErrors()) {
+            throw new BadRequestException("Empty or not respected fields", validation.getAllErrors());
+        } else {
+            try {
+                return addressesService.findByIdAndUpdate(admin.getId(), address_id, body);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
-  }
 }
