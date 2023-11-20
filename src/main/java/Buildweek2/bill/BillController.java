@@ -1,5 +1,6 @@
 package Buildweek2.bill;
 
+import Buildweek2.bill.Payloads.BillPachDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,10 @@ public class BillController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
     public void findAndDeleteById(@PathVariable int id) {
         billService.findAndDeleteById(id);
+    }
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Bill changeStateBill(@PathVariable int id, @RequestBody BillPachDTO body) {
+        return billService.changeStateBill(id, body);
     }
 }

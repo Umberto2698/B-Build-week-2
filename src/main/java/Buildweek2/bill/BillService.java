@@ -35,14 +35,9 @@ public class BillService {
         return billRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
 
     }
-    public Bill findAndUpdateById(int id, BillPachDTO body) {
+    public Bill changeStateBill(int id, BillPachDTO body) {
         Bill found1 = this.findById(id);
-
-
         found1.setState(body.billState());
-
-
-
         return found1;
 
     }
