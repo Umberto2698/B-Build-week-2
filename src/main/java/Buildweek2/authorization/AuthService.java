@@ -83,7 +83,6 @@ public class AuthService {
         newClient.setEmail(body.email());
         newClient.setPec(body.pec());
         newClient.setPhone(body.phone());
-        newClient.setInsertDate(LocalDate.now());
         newClient.setVATNumber(body.VATNumber());
         clientRepo.save(newClient);
         return newClient;
