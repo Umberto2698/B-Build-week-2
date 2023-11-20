@@ -74,7 +74,6 @@ public class AuthService {
     }
     public Client save(NewClientDTO body){
         Client newClient = new Client();
-        newClient.setCompanyLogo(body.companyLogo());
         newClient.setBusinessName(body.businessName());
         newClient.setAnnualTurnHover(body.annualTurnHover());
         newClient.setContactName(body.contactName());
@@ -84,7 +83,6 @@ public class AuthService {
         newClient.setEmail(body.email());
         newClient.setPec(body.pec());
         newClient.setPhone(body.phone());
-        newClient.setInsertDate(LocalDate.now());
         newClient.setVATNumber(body.VATNumber());
         clientRepo.save(newClient);
         return newClient;
