@@ -7,13 +7,16 @@ import java.util.List;
 
 @Getter
 public class BadRequestException extends RuntimeException {
-    private List<ObjectError> errorsList;
+  private List<ObjectError> errorsList;
 
-    public BadRequestException(String message) {
-        super(message);
-    }
+  public BadRequestException(String message) {
+    super(message);
+  }
 
-    public BadRequestException(List<ObjectError> errors) {
-        this.errorsList = errors;
-    }
+  public BadRequestException(List<ObjectError> errors) {
+    this.errorsList = errors;
+  }
+
+  public BadRequestException(String emptyOrNotRespectedFields, List<ObjectError> allErrors) {
+  }
 }
