@@ -1,5 +1,6 @@
 package Buildweek2.client;
 
+import Buildweek2.client.payloads.ChangeClientInfoDTO;
 import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.ItemNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,16 @@ public class ClientService {
     public void removeClient(long id){
         Client toRemove = clientRepo.findById(id).orElseThrow(()-> new ItemNotFoundException(""));
         clientRepo.delete(toRemove);
+    }
+    public Client findByIdAndUpdate(long id, ChangeClientInfoDTO body){
+        Client found = clientRepo.findById(id).orElseThrow(()-> new ItemNotFoundException(""));
+        found.setContactName(body.contactName());
+        found.setContactSurname(body.contactSurname());
+        found.setContactPhone(body.contactPhone());
+        found.setEmail(body.email());
+        found.setPhone(body.phone());
+        found.setPec(body.pec());
+        clientRepo.save(found);
+        return found;
     }
 }

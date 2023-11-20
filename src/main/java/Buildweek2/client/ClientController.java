@@ -1,5 +1,6 @@
 package Buildweek2.client;
 
+import Buildweek2.client.payloads.ChangeClientInfoDTO;
 import Buildweek2.client.payloads.NewClientDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,11 @@ public class ClientController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeClient(@PathVariable("id") long id){
         clientService.removeClient(id);
+    }
+    @PutMapping("/changeClientInfo/{clientId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Client changeClientInfo(@PathVariable("clientId") long id, @RequestBody ChangeClientInfoDTO body){
+        return clientService.findByIdAndUpdate(id, body);
     }
 
 }
