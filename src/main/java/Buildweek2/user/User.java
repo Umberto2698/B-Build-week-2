@@ -1,23 +1,46 @@
 package Buildweek2.user;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.github.javafaker.Faker;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(builderClassName = "UserBuilder")
+@Entity
+@JsonIgnoreProperties({"createdAt", "password", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    private String username;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+    @CreationTimestamp
+    @Column(name = "creation_date")
+    private Date createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
     @Override
@@ -26,27 +49,33 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
+    }
+
+    public static class UserBuilder {
+        Faker faker = new Faker(Locale.ITALY);
+        private String name = faker.name().firstName();
+        private String surname = faker.name().lastName();
+        private String email = name + "." + surname + "@gmail.com";
+        private String avatarUrl = "https://ui-avatars.com/api/?name=" + name + "+" + surname;
+        private String password = faker.phoneNumber().cellPhone();
+        private String username = faker.funnyName().name();
+        private UserRole role = UserRole.USER;
     }
 }
