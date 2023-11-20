@@ -1,6 +1,6 @@
 package Buildweek2.Address;
 
-import Buildweek2.exceptions.ItemNotFoundException;
+import Buildweek2.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class AddressesService {
   }
 
   public Address findById(Long id) {
-    return addressRepository.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
+    return addressRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
   }
 
   public Address findByIdAndUpdate(long client_id, long address_id, AddressDTO addressDTO) {
@@ -27,7 +27,7 @@ public class AddressesService {
   }
 
   private Address findAddressByClientId(long client_id) {
-    return addressRepository.findByClientId(client_id).orElseThrow(() -> new ItemNotFoundException(client_id));
+    return addressRepository.findByClientId(client_id).orElseThrow(() -> new NotFoundException(client_id));
   }
 
   public void findByIdAndDelete(long address_id) {
