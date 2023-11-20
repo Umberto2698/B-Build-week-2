@@ -20,7 +20,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) {
-
         return new UserSuccessLoginDTO(authService.authenticateUser(body));
     }
 
@@ -28,7 +27,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Validated UserDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
-            throw new BadRequestException(validation.getAllErrors());
+            throw new BadRequestException("", validation.getAllErrors());
         } else {
             return authService.save(body);
         }
@@ -38,7 +37,7 @@ public class AuthController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public User updateRole(@PathVariable long id, @RequestBody @Validated RoleUpdateDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
-            throw new BadRequestException(validation.getAllErrors());
+            throw new BadRequestException("", validation.getAllErrors());
         } else {
             return authService.updateRole(id, body);
         }
@@ -48,7 +47,7 @@ public class AuthController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public User updateUserInfo(@PathVariable long id, @RequestBody @Validated UserUpdateInfoDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
-            throw new BadRequestException(validation.getAllErrors());
+            throw new BadRequestException("", validation.getAllErrors());
         } else {
             return authService.update(id, body);
         }
