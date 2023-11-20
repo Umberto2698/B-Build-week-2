@@ -2,6 +2,7 @@ package Buildweek2.client;
 
 import Buildweek2.client.payloads.NewClientDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,14 @@ public class ClientController {
     public Client newClient(@RequestBody NewClientDTO body){
         return clientService.save(body);
     }
-    
+
+    @GetMapping("")
+    public Page<Client> getPagesOfDevices(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "deviceStatus") String orderBy){
+        return clientService.getAll(page, size, orderBy);
+    }
+    @GetMapping("{id}")
+    public Client getSingleDevice(@PathVariable("id") long id){
+        return clientService.getSingleClient(id);
+    }
 
 }
