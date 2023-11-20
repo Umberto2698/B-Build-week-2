@@ -19,12 +19,17 @@ public class ClientController {
     }
 
     @GetMapping("")
-    public Page<Client> getPagesOfDevices(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "deviceStatus") String orderBy){
+    public Page<Client> getPagesOfClients(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "deviceStatus") String orderBy){
         return clientService.getAll(page, size, orderBy);
     }
     @GetMapping("{id}")
-    public Client getSingleDevice(@PathVariable("id") long id){
+    public Client getSingleClient(@PathVariable("id") long id){
         return clientService.getSingleClient(id);
+    }
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeClient(@PathVariable("id") long id){
+        clientService.removeClient(id);
     }
 
 }

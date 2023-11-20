@@ -41,4 +41,8 @@ public class ClientService {
     public Client getSingleClient(long id){
         return clientRepo.findById(id).orElseThrow(() -> new ItemNotFoundException(""));
     }
+    public void removeClient(long id){
+        Client toRemove = clientRepo.findById(id).orElseThrow(()-> new ItemNotFoundException(""));
+        clientRepo.delete(toRemove);
+    }
 }
