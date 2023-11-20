@@ -62,7 +62,9 @@ public class AuthController {
     @PostMapping("/client")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Client saveClient(@RequestBody NewClientDTO body){
-        return authService.save(body);
+    public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation){
+        if (validation.hasErrors()) {
+            throw new BadRequestException("", validation.getAllErrors());
+        }return authService.save(body);
     }
 }
