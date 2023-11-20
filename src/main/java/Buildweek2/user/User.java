@@ -1,4 +1,4 @@
-package Buildweek2.enteties;
+package Buildweek2.user;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -1,8 +1,6 @@
-package Buildweek2.services;
+package Buildweek2.user;
 
-import Buildweek2.enteties.User;
 import Buildweek2.exceptions.ItemNotFoundException;
-import Buildweek2.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

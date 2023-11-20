@@ -1,8 +1,8 @@
 package Buildweek2.security;
 
-import Buildweek2.enteties.User;
 import Buildweek2.exceptions.UnauthorizedException;
-import Buildweek2.services.UserService;
+import Buildweek2.user.User;
+import Buildweek2.user.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

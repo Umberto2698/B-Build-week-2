@@ -1,7 +1,7 @@
 package Buildweek2.security;
 
-import Buildweek2.enteties.User;
 import Buildweek2.exceptions.UnauthorizedException;
+import Buildweek2.user.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
