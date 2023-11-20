@@ -18,23 +18,6 @@ public class ClientService {
     @Autowired
     ClientRepository clientRepo;
 
-    public Client save(NewClientDTO body){
-        Client newClient = new Client();
-        newClient.setCompanyLogo(body.companyLogo());
-        newClient.setBusinessName(body.businessName());
-        newClient.setAnnualTurnHover(body.annualTurnHover());
-        newClient.setContactName(body.contactName());
-        newClient.setContactEmail(body.contactEmail());
-        newClient.setContactSurname(body.contactSurname());
-        newClient.setContactPhone(body.contactPhone());
-        newClient.setEmail(body.email());
-        newClient.setPec(body.pec());
-        newClient.setPhone(body.phone());
-        newClient.setInsertDate(LocalDate.now());
-        newClient.setVATNumber(body.VATNumber());
-        clientRepo.save(newClient);
-        return newClient;
-    }
     public Page<Client> getAll(int page, int size, String orderBy){
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return clientRepo.findAll(pageable);
