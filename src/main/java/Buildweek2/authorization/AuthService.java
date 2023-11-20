@@ -74,7 +74,6 @@ public class AuthService {
     }
     public Client save(NewClientDTO body){
         Client newClient = new Client();
-        newClient.setCompanyLogo(body.companyLogo());
         newClient.setBusinessName(body.businessName());
         newClient.setAnnualTurnHover(body.annualTurnHover());
         newClient.setContactName(body.contactName());
