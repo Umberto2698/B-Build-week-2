@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 public class AuthService {
     @Autowired
@@ -46,7 +44,12 @@ public class AuthService {
         userRepository.findByEmail(body.email()).ifPresent(a -> {
             throw new BadRequestException("The email" + a.getEmail() + " is alredy used.");
         });
-        User user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).role(body.role()).build();
+        User user = null;
+        if (!body.username().isEmpty()) {
+            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.username()).build();
+        } else {
+            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.name()).build();
+        }
         return userRepository.save(user);
     }
 
@@ -72,7 +75,8 @@ public class AuthService {
         found.setRole(body.role());
         return userRepository.save(found);
     }
-    public Client save(NewClientDTO body){
+
+    public Client save(NewClientDTO body) {
         Client newClient = new Client();
         newClient.setBusinessName(body.businessName());
         newClient.setAnnualTurnHover(body.annualTurnHover());

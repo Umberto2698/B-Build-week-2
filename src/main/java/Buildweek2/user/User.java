@@ -6,6 +6,7 @@ import com.github.javafaker.Faker;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -71,7 +72,8 @@ public class User implements UserDetails {
     }
 
     public static class UserBuilder {
-        Faker faker = new Faker(Locale.ITALY);
+        @Autowired
+        private Faker faker;
         private String name = faker.name().firstName();
         private String surname = faker.name().lastName();
         private String email = name + "." + surname + "@gmail.com";
