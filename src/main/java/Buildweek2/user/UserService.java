@@ -1,6 +1,6 @@
 package Buildweek2.user;
 
-import Buildweek2.exceptions.ItemNotFoundException;
+import Buildweek2.exceptions.NotFoundException;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,11 @@ public class UserService {
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ItemNotFoundException(email));
+                .orElseThrow(() -> new NotFoundException(email));
     }
 
     public User getById(long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
     public void delete(long id) {
