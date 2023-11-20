@@ -20,7 +20,7 @@ public class ClientController {
     }
 
     @GetMapping("")
-    public Page<Client> getPagesOfClients(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "deviceStatus") String orderBy){
+    public Page<Client> getPagesOfClients(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, @RequestParam(defaultValue = "companyName") String orderBy){
         return clientService.getAll(page, size, orderBy);
     }
     @GetMapping("{id}")
