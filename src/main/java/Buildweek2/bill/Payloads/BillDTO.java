@@ -1,5 +1,6 @@
-package Buildweek2.bill;
+package Buildweek2.bill.Payloads;
 
+import Buildweek2.bill.BillState;
 import Buildweek2.bill.validator.ValidBillState;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
