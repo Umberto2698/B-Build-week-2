@@ -1,7 +1,7 @@
 package Buildweek2.exceptions;
 
-import Buildweek2.payloads.errors.ErrorsResponseDTO;
-import Buildweek2.payloads.errors.ErrorsResponseWithListDTO;
+import Buildweek2.exceptions.payloads.ErrorsResponseDTO;
+import Buildweek2.exceptions.payloads.ErrorsResponseWithListDTO;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
