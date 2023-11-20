@@ -1,4 +1,4 @@
-package Buildweek2.exceptions.payloads;
+package Buildweek2.exceptions.ExceptionPayloads;
 
 import java.util.Date;
 
