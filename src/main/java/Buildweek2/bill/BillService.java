@@ -1,6 +1,6 @@
 package Buildweek2.bill;
 
-import Buildweek2.exceptions.ItemNotFoundException;
+import Buildweek2.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
@@ -31,7 +31,7 @@ public class BillService {
     }
     public Bill findById(long id) {
 
-        return billRepository.findById(id).orElseThrow(() -> new ItemNotFoundException(""));
+        return billRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
 
     }
     public Bill findAndUpdateById(int id, BillPachDTO body) {
