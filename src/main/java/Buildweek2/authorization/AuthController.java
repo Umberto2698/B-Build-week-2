@@ -1,5 +1,7 @@
 package Buildweek2.authorization;
 
+import Buildweek2.client.Client;
+import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
 import Buildweek2.user.payloads.*;
@@ -56,5 +58,11 @@ public class AuthController {
     @PutMapping("/me")
     public UserDetails updateProfile(@AuthenticationPrincipal User currentUser, @RequestBody UserUpdateInfoDTO body) {
         return authService.update(currentUser.getId(), body);
+    }
+    @PostMapping("/client")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Client saveClient(@RequestBody NewClientDTO body){
+        return authService.save(body);
     }
 }

@@ -1,5 +1,8 @@
 package Buildweek2.authorization;
 
+import Buildweek2.client.Client;
+import Buildweek2.client.ClientRepository;
+import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.exceptions.UnauthorizedException;
 import Buildweek2.security.JWTTools;
@@ -14,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class AuthService {
     @Autowired
@@ -24,6 +29,8 @@ public class AuthService {
     private JWTTools jwtTools;
     @Autowired
     private PasswordEncoder bcrypt;
+    @Autowired
+    private ClientRepository clientRepo;
 
     public String authenticateUser(UserLoginDTO body) {
         User user = userService.findByEmail(body.email());
@@ -64,5 +71,22 @@ public class AuthService {
         User found = userService.getById(id);
         found.setRole(body.role());
         return userRepository.save(found);
+    }
+    public Client save(NewClientDTO body){
+        Client newClient = new Client();
+        newClient.setCompanyLogo(body.companyLogo());
+        newClient.setBusinessName(body.businessName());
+        newClient.setAnnualTurnHover(body.annualTurnHover());
+        newClient.setContactName(body.contactName());
+        newClient.setContactEmail(body.contactEmail());
+        newClient.setContactSurname(body.contactSurname());
+        newClient.setContactPhone(body.contactPhone());
+        newClient.setEmail(body.email());
+        newClient.setPec(body.pec());
+        newClient.setPhone(body.phone());
+        newClient.setInsertDate(LocalDate.now());
+        newClient.setVATNumber(body.VATNumber());
+        clientRepo.save(newClient);
+        return newClient;
     }
 }

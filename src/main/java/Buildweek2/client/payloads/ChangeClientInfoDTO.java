@@ -6,24 +6,24 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record ChangeClientInfoDTO(
-        @NotEmpty(message = "il campo contactName non può essere lasciato vuoto!")
+        @NotEmpty(message = "field contactName cannot be empty!")
         String contactName,
-        @NotEmpty(message = "il campo contactSurname non può essere lasciato vuoto!")
+        @NotEmpty(message = "field contactSurname cannot be empty!")
         String contactSurname,
-        @NotEmpty(message = "il campo contactEmail non può essere lasciato vuoto!")
-        @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "inserisci un email valida")
+        @NotEmpty(message = "field contactEmail cannot be empty!")
+        @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "insert a valid email")
         String contactEmail,
-        @NotNull(message = "il campo contactPhone non può essere lasciato vuoto!")
-        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "inserisci un numero di telefono valido")
+        @NotNull(message = "field contactPhone cannot be empty!")
+        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
         Long contactPhone,
-        @NotNull(message = "il campo phone non può essere lasciato vuoto!")
-        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "inserisci un numero di telefono valido")
+        @NotNull(message = "field phone cannot be empty!")
+        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
         Long phone,
-        @NotEmpty(message = "il campo email non può essere lasciato vuoto!")
-        @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "inserisci un email valida")
+        @NotEmpty(message = "field email cannot be empty!")
+        @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "insert a valid email")
         String email,
-        @NotEmpty(message = "il campo pec non può essere lasciato vuoto!")
-        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.pec\\.it$", message = "inserisci una pec valida")
+        @NotEmpty(message = "field pec cannot be empty!")
+        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.pec\\.it$", message = "insert a valid pec")
         String pec
 ) {
 }
