@@ -55,6 +55,9 @@ public class BillService {
         return billRepository.findByClientId(clientId);
     }
 
+    public List<Bill> getAllBills() {
+        return billRepository.findAll();
+    }
 
     public Bill findById(long id) {
 
