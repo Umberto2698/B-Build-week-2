@@ -1,5 +1,6 @@
 package Buildweek2.address;
 
+import Buildweek2.address.payloads.AddressDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
