@@ -1,7 +1,6 @@
 package Buildweek2.Address.municipality;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,22 +13,25 @@ import lombok.Setter;
 @Setter
 public class Municipality implements CsvFileEntitiy {
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
   private String denomination;
-  private String idProvince;
+  @ManyToOne
+  @JoinColumn(name = "province_id")
+  private Province province;
 
   @Override
   public void setFirstProperty(String string) {
-    this.idProvince = string;
+
   }
 
   @Override
   public void setSecondProperty(String string) {
-    this.id = string;
+    setDenomination(string);
   }
 
   @Override
-  public void setThirdProperty(String string) {
-    this.denomination = string;
+  public <T> void setThirdProperty(T element) {
+    setProvince((Province) element);
   }
 }

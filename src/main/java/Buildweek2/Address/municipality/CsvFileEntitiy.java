@@ -5,5 +5,6 @@ public interface CsvFileEntitiy {
 
   void setSecondProperty(String string);
 
-  void setThirdProperty(String string);
+  <T> void setThirdProperty(T string);
+
 }
