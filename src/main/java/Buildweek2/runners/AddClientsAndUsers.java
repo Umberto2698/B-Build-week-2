@@ -9,6 +9,7 @@ import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -18,10 +19,10 @@ import java.util.Random;
 @Component
 @Order(1)
 public class AddClientsAndUsers implements CommandLineRunner {
-  @Autowired
-  private Faker faker;
-  @Autowired
-  private AuthService authService;
+    @Autowired
+    private Faker faker;
+    @Autowired
+    private AuthService authService;
 
     @Autowired
     private UserService userService;
@@ -75,5 +76,5 @@ public class AddClientsAndUsers implements CommandLineRunner {
             }
         }
     }
-  }
 }
+

@@ -18,8 +18,8 @@ import java.util.List;
 
 @Service
 public class BillService {
-  @Autowired
-  private BillRepository billRepository;
+    @Autowired
+    private BillRepository billRepository;
 
     @Autowired
     private UserService userService;
@@ -60,12 +60,7 @@ public class BillService {
     }
 
     public Bill findById(long id) {
-
-  public Page<Bill> getBill(int page, int size, String orderBy) {
-    Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
-    return billRepository.findAll(pageable);
-  }
-
+        return billRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
     public Bill changeStateBill(int id, BillPachDTO body) {
