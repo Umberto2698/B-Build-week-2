@@ -35,7 +35,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/role/{id}")
+    @PutMapping("/role/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public User updateRole(@PathVariable long id, @RequestBody @Validated RoleUpdateDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
