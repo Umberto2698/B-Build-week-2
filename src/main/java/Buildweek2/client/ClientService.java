@@ -55,6 +55,9 @@ public class ClientService {
         return clientRepo.save(found);
     }
     public List<Client> filterByTurnHover(long annualTurnHover){
-        return clientRepo.filterByTurnHover(annualTurnHover);
+        return clientRepo.filterByTurnHover(annualTurnHover).orElseThrow(()-> new NotFoundException("Nessun record per questo fatturato"));
+    }
+    public List<Client> filterByInsertDate(LocalDate startDate, LocalDate endDate){
+        return clientRepo.filterByInsertDate(startDate,endDate).orElseThrow(()-> new NotFoundException("Nessun record per questa data"));
     }
 }
