@@ -15,6 +15,6 @@ public record UserDTO(@NotEmpty(message = "The name is required.")
                       String username
 //                      @ValidRole(enumClass = UserRole.class, message = "The type of device must be one of these:" +
 //                              "USER, ADMIN")
-//                      UserRole role
+//                      String role
 ) {
 }

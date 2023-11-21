@@ -5,6 +5,7 @@ import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
 import Buildweek2.user.payloads.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +22,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) {
+    public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) throws Exception {
         return new UserSuccessLoginDTO(authService.authenticateUser(body));
     }
 
@@ -60,7 +61,7 @@ public class AuthController {
         return authService.update(currentUser.getId(), body);
     }
     @PostMapping("/client")
-    @PreAuthorize("hasAuthority('ADMIN')")
+   // @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation){
         if (validation.hasErrors()) {

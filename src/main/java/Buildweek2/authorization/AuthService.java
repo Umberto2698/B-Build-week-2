@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -33,13 +34,15 @@ public class AuthService {
     @Autowired
     private ClientRepository clientRepo;
 
-    public String authenticateUser(UserLoginDTO body) {
+    public String authenticateUser(UserLoginDTO body) throws Exception {
         User user = userService.findByEmail(body.email());
-
+        System.out.println(user.getEmail());
+        System.out.println(bcrypt.matches(body.password(), user.getPassword()));
         if (bcrypt.matches(body.password(), user.getPassword())) {
             return jwtTools.createToken(user);
         } else {
-            throw new UnauthorizedException("Email or password invalid.");
+            //throw new UnauthorizedException("Email or password invalid.");
+            throw new IOException();
         }
     }
 
@@ -91,10 +94,10 @@ public class AuthService {
         newClient.setContactName(body.contactName());
         newClient.setContactEmail(body.contactEmail());
         newClient.setContactSurname(body.contactSurname());
-        newClient.setContactPhone(body.contactPhone());
+        newClient.setContactPhone(Long.parseLong(body.contactPhone()));
         newClient.setEmail(body.email());
         newClient.setPec(body.pec());
-        newClient.setPhone(body.phone());
+        newClient.setPhone(Long.parseLong(body.phone()));
         newClient.setVATNumber(body.VATNumber());
         newClient.setCompanyLogo(body.companyLogo());
         newClient.setCompanyName(body.companyName());

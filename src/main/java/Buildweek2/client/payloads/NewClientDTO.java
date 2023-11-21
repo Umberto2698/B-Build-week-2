@@ -44,6 +44,6 @@ public record NewClientDTO(
 
         @ValidBusinessName(enumClass = BusinessName.class,
                 message = "business name not valid")
-        BusinessName businessName
+        String businessName
 ) {
 }

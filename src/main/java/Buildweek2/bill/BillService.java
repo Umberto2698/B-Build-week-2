@@ -15,11 +15,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BillService {
     @Autowired
-    private BillRepository billRepository;
+    BillRepository billRepository;
 
     @Autowired
     private UserService userService;
@@ -65,7 +71,10 @@ public class BillService {
 
     public Bill changeStateBill(int id, BillPachDTO body) {
         Bill found1 = this.findById(id);
-        found1.setState(body.billState());
+        if (Objects.equals(body.billState(), "PAID")) {
+            found1.setState(BillState.PAID);
+        }else { found1.setState(BillState.UNPAID);}
+
         return found1;
 
     }
@@ -74,5 +83,24 @@ public class BillService {
         Bill found1 = this.findById(id);
         billRepository.delete(found1);
     }
+    public Page<Bill> getBillsByClientId(Long clientId, int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return billRepository.findByClientId(clientId,pageable);
+    }
+   public List<Bill> billsPaidUnPaid (BillPachDTO state) {
 
+       return  billRepository.findByState(state).orElseThrow(()->new NotFoundException("no Record"));
+   }
+
+    public List<Bill> getBillsByDate(LocalDate startDate,LocalDate endDate) {
+        return billRepository.findByDate(startDate,endDate).orElseThrow(()->new NotFoundException("no Record"));
+    }
+    public List<Bill> getBillsByYear(LocalDate date) {
+        int year = date.getYear();
+        return billRepository.findByDateYear(year).orElseThrow(()->new NotFoundException("no Record"));
+    }
+    public List<Bill> findByRangeAmount(Long minAmount,Long maxAmount) {
+
+        return billRepository.findByRangeAmount(minAmount,maxAmount).orElseThrow(()->new NotFoundException("no Record"));
+    }
 }

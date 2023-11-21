@@ -15,7 +15,7 @@ public record BillDTO(
         @NotEmpty(message = "Client Id Field Required!") Long clientId,
         @ValidBillState(enumClass = BillState.class,
                 message = "The Bill can be:" +
-                        "  PAID or UNPAID") BillState billState
+                        "  PAID or UNPAID") String billState
 
 ) {
 }
