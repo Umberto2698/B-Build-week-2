@@ -12,8 +12,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = RoleValidator.class)
 public @interface ValidRole {
-
-
     String message() default "The value entered is invalid";
 
     Class<?>[] groups() default {};

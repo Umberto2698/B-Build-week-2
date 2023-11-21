@@ -1,5 +1,7 @@
 package Buildweek2.bill;
 
+import Buildweek2.client.Client;
+import Buildweek2.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +12,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "bill")
+@Table(name = "bills")
 public class Bill {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,11 +22,11 @@ public class Bill {
     private int number;
     @Enumerated(EnumType.STRING)
     private BillState state;
-    /*@ManytoOne
+    @ManyToOne
     @JoinColumn(name = "cliente_id")
-    private Client client;*/
+    private Client client;
 
-    /*@ManytoOne
-     @JoinColumn(name = "user_id")
-    private User user;*/
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

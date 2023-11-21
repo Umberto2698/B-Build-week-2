@@ -10,37 +10,37 @@ import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 public record NewClientDTO(
-        @NotEmpty(message = "il campo contactName non può essere lasciato vuoto!")
+        @NotEmpty(message = "field contactName cannot be empty!")
         String contactName,
-        @NotEmpty(message = "il campo contactSurname non può essere lasciato vuoto!")
+        @NotEmpty(message = "field contactSurname cannot be empty!")
         String contactSurname,
-        @NotEmpty(message = "il campo contactEmail non può essere lasciato vuoto!")
-        @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "inserisci un email valida")
+        @NotEmpty(message = "field contactEmail cannot be empty!")
+        @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "insert a valid email")
         String contactEmail,
-        @NotNull(message = "il campo contactPhone non può essere lasciato vuoto!")
-        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "inserisci un numero di telefono valido")
+        @NotNull(message = "field contactPhone cannot be empty!")
+        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
         Long contactPhone,
-        @NotNull(message = "il campo phone non può essere lasciato vuoto!")
-        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "inserisci un numero di telefono valido")
+        @NotNull(message = "field phone cannot be empty!")
+        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
         Long phone,
-        @NotEmpty(message = "il campo companyName non può essere lasciato vuoto!")
+        @NotEmpty(message = "field companyName cannot be empty!")
         String companyName,
-        @NotEmpty(message = "il campo VATNumber non può essere lasciato vuoto!")
-        @Pattern(regexp = "^[0-9]{11}$",message = "inserisci una partita iva valida")
+        @NotEmpty(message = "field VATNumber cannot be empty!")
+        @Pattern(regexp = "^[0-9]{11}$",message = "insert a valid VAT")
         String VATNumber,
-        @NotEmpty(message = "il campo email non può essere lasciato vuoto!")
-        @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "inserisci un email valida")
+        @NotEmpty(message = "field email cannot be empty!")
+        @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "insert a valid email")
         String email,
-        @NotNull(message = "il campo annualTurnHover non può essere lasciato vuoto!")
+        @NotNull(message = "field annualTurnHover cannot be empty!")
         Long annualTurnHover,
-        @NotEmpty(message = "il campo pec non può essere lasciato vuoto!")
-        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.pec\\.it$", message = "inserisci una pec valida")
+        @NotEmpty(message = "field pec cannot be empty!")
+        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.pec\\.it$", message = "insert a valid pec")
         String pec,
-        @NotEmpty(message = "il campo companyLogo non può essere lasciato vuoto!")
+        @NotEmpty(message = "field companyLogo cannot be empty!")
         String companyLogo,
 
         @ValidBusinessName(enumClass = BusinessName.class,
-                message = "business name non valido")
+                message = "business name not valid")
         BusinessName businessName
 ) {
 }

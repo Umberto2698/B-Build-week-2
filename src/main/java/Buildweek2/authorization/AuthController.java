@@ -1,5 +1,7 @@
 package Buildweek2.authorization;
 
+import Buildweek2.client.Client;
+import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
 import Buildweek2.user.payloads.*;
@@ -33,7 +35,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/role/{id}")
+    @PutMapping("/role/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public User updateRole(@PathVariable long id, @RequestBody @Validated RoleUpdateDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
@@ -56,5 +58,13 @@ public class AuthController {
     @PutMapping("/me")
     public UserDetails updateProfile(@AuthenticationPrincipal User currentUser, @RequestBody UserUpdateInfoDTO body) {
         return authService.update(currentUser.getId(), body);
+    }
+    @PostMapping("/client")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation){
+        if (validation.hasErrors()) {
+            throw new BadRequestException("", validation.getAllErrors());
+        }return authService.save(body);
     }
 }

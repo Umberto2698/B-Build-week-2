@@ -1,18 +1,17 @@
 package Buildweek2.user;
 
+import Buildweek2.bill.Bill;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.javafaker.Faker;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Getter
 @Setter
@@ -20,6 +19,7 @@ import java.util.Locale;
 @NoArgsConstructor
 @Builder(builderClassName = "UserBuilder")
 @Entity
+@Table(name = "users")
 @JsonIgnoreProperties({"createdAt", "password", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
 public class User implements UserDetails {
     @Id
@@ -37,6 +37,9 @@ public class User implements UserDetails {
     @CreationTimestamp
     @Column(name = "creation_date")
     private Date createdAt;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Bill> bills = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,7 +72,8 @@ public class User implements UserDetails {
     }
 
     public static class UserBuilder {
-        Faker faker = new Faker(Locale.ITALY);
+        @Autowired
+        private Faker faker;
         private String name = faker.name().firstName();
         private String surname = faker.name().lastName();
         private String email = name + "." + surname + "@gmail.com";

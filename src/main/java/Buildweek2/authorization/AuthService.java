@@ -1,5 +1,8 @@
 package Buildweek2.authorization;
 
+import Buildweek2.client.Client;
+import Buildweek2.client.ClientRepository;
+import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.exceptions.UnauthorizedException;
 import Buildweek2.security.JWTTools;
@@ -24,6 +27,8 @@ public class AuthService {
     private JWTTools jwtTools;
     @Autowired
     private PasswordEncoder bcrypt;
+    @Autowired
+    private ClientRepository clientRepo;
 
     public String authenticateUser(UserLoginDTO body) {
         User user = userService.findByEmail(body.email());
@@ -39,7 +44,12 @@ public class AuthService {
         userRepository.findByEmail(body.email()).ifPresent(a -> {
             throw new BadRequestException("The email" + a.getEmail() + " is alredy used.");
         });
-        User user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).role(body.role()).build();
+        User user = null;
+        if (!body.username().isEmpty()) {
+            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.username()).build();
+        } else {
+            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.name()).build();
+        }
         return userRepository.save(user);
     }
 
@@ -64,5 +74,21 @@ public class AuthService {
         User found = userService.getById(id);
         found.setRole(body.role());
         return userRepository.save(found);
+    }
+
+    public Client save(NewClientDTO body) {
+        Client newClient = new Client();
+        newClient.setBusinessName(body.businessName());
+        newClient.setAnnualTurnHover(body.annualTurnHover());
+        newClient.setContactName(body.contactName());
+        newClient.setContactEmail(body.contactEmail());
+        newClient.setContactSurname(body.contactSurname());
+        newClient.setContactPhone(body.contactPhone());
+        newClient.setEmail(body.email());
+        newClient.setPec(body.pec());
+        newClient.setPhone(body.phone());
+        newClient.setVATNumber(body.VATNumber());
+        clientRepo.save(newClient);
+        return newClient;
     }
 }
