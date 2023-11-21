@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
@@ -48,5 +50,21 @@ public class ClientController {
     @PatchMapping("/upload/me")
     public Client updateProfilePicture(@RequestParam("avatar") MultipartFile body, @AuthenticationPrincipal User currentUser) throws IOException {
         return clientService.uploadLogo(body, currentUser.getId());
+    }
+    @GetMapping("/turnHover")
+    public List<Client> getByTurnHover(@RequestParam("amount") long amount){
+        return clientService.filterByTurnHover(amount);
+    }
+    @GetMapping("/date")
+    public List<Client> getByRangeInsertDate(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate){
+        return clientService.filterByInsertDate(startDate, endDate);
+    }
+    @GetMapping("/lastContract")
+    public List<Client> getByRangeLastContract(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate){
+        return clientService.filterByLastContractDate(startDate, endDate);
+    }
+    @GetMapping("/name/{name}")
+    public List<Client> getByPartialName(@PathVariable("name") String name){
+        return clientService.filterByPartialName(name);
     }
 }

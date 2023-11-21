@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ClientService {
@@ -52,5 +53,17 @@ public class ClientService {
         String url = (String) cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
         found.setCompanyLogo(url);
         return clientRepo.save(found);
+    }
+    public List<Client> filterByTurnHover(long annualTurnHover){
+        return clientRepo.filterByTurnHover(annualTurnHover).orElseThrow(()-> new NotFoundException("Nessun record per questo fatturato"));
+    }
+    public List<Client> filterByInsertDate(LocalDate startDate, LocalDate endDate){
+        return clientRepo.filterByInsertDate(startDate,endDate).orElseThrow(()-> new NotFoundException("Nessun record per queste date"));
+    }
+    public List<Client> filterByLastContractDate(LocalDate startDate, LocalDate endDate){
+        return clientRepo.filterByLastContractDate(startDate,endDate).orElseThrow(()-> new NotFoundException("Nessun record per queste date"));
+    }
+    public List<Client> filterByPartialName(String nameToSearch){
+        return clientRepo.filterByPartialName(nameToSearch).orElseThrow(()-> new NotFoundException("Nessun record trovato"));
     }
 }
