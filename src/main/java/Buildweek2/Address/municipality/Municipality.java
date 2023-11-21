@@ -1,11 +1,15 @@
 package Buildweek2.address.municipality;
 
+import Buildweek2.address.Address;
 import Buildweek2.address.Province.Province;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -21,5 +25,6 @@ public class Municipality {
     @JoinColumn(name = "province_id")
     private Province province;
 
-
+    @OneToMany(mappedBy = "municipality")
+    private List<Address> addressList = new ArrayList<>();
 }

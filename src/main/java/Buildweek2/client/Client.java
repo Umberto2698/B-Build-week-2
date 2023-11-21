@@ -1,6 +1,6 @@
 package Buildweek2.client;
 
-import Buildweek2.Address.Address;
+import Buildweek2.address.Address;
 import Buildweek2.bill.Bill;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -53,8 +53,8 @@ public class Client {
     @Enumerated(EnumType.STRING)
     private BusinessName businessName;
 
-  @OneToMany(mappedBy = "client")
-  private Set<Address> addresses = new HashSet<>();
-  @OneToMany(mappedBy = "client")
-  private Set<Bill> bills = new HashSet<>();
+    @OneToMany(mappedBy = "client")
+    private Set<Address> addresses = new HashSet<>();
+    @OneToMany(mappedBy = "client")
+    private Set<Bill> bills = new HashSet<>();
 }

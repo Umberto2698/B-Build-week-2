@@ -1,5 +1,6 @@
 package Buildweek2.address;
 
+import Buildweek2.address.municipality.Municipality;
 import Buildweek2.client.Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,10 +21,10 @@ public class Address {
     private String street;
     private String civic;
     private String location;
-    private Long postalCode;
-    @OneToOne
+    private String postalCode;
+    @ManyToOne
     @JoinColumn(name = "municipality_id")
-    private Long municipality;
+    private Municipality municipality;
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;

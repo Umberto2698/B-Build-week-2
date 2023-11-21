@@ -2,6 +2,7 @@ package Buildweek2.address.municipality;
 
 import Buildweek2.address.Province.Province;
 import Buildweek2.address.Province.ProvincesService;
+import Buildweek2.exceptions.NotFoundException;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
@@ -23,6 +24,10 @@ public class MunicipalitiesService {
 
     public void saveMunicapality(Municipality entitiy) {
         mr.save(entitiy);
+    }
+
+    public Municipality findById(long id) {
+        return mr.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
     public void readCsvFileMunicipality(String path) throws IOException {
