@@ -58,6 +58,12 @@ public class ClientService {
         return clientRepo.filterByTurnHover(annualTurnHover).orElseThrow(()-> new NotFoundException("Nessun record per questo fatturato"));
     }
     public List<Client> filterByInsertDate(LocalDate startDate, LocalDate endDate){
-        return clientRepo.filterByInsertDate(startDate,endDate).orElseThrow(()-> new NotFoundException("Nessun record per questa data"));
+        return clientRepo.filterByInsertDate(startDate,endDate).orElseThrow(()-> new NotFoundException("Nessun record per queste date"));
+    }
+    public List<Client> filterByLastContractDate(LocalDate startDate, LocalDate endDate){
+        return clientRepo.filterByLastContractDate(startDate,endDate).orElseThrow(()-> new NotFoundException("Nessun record per queste date"));
+    }
+    public List<Client> filterByPartialName(String nameToSearch){
+        return clientRepo.filterByPartialName(nameToSearch).orElseThrow(()-> new NotFoundException("Nessun record trovato"));
     }
 }

@@ -17,4 +17,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<List<Client>> filterByTurnHover(@Param("annualTurnHover") long annualTurnHover);
     @Query("SELECT c FROM Client c WHERE DATE(c.insertDate) BETWEEN DATE(:startDate) AND DATE(:endDate)")
     Optional<List<Client>> filterByInsertDate(@Param("startDate")LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query("SELECT c FROM Client c WHERE DATE(c.lastContractDate) BETWEEN DATE(:startDate) AND DATE(:endDate)")
+    Optional<List<Client>> filterByLastContractDate(@Param("startDate")LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query("SELECT c FROM Client c WHERE c.CompanyName LIKE %:partialName%")
+    Optional<List<Client>> filterByPartialName(@Param("partialName") String partialToSearch);
 }
