@@ -1,4 +1,4 @@
-package Buildweek2.address;
+package Buildweek2.Address;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface AddressesRepository extends JpaRepository<Address, Long> {
-    @Query("Select a from Address a WHERE a.client.id = :clientId")
-    Optional<Address> findByClientId(long clientId);
+  @Query("Select a from Address a WHERE a.client.id = :clientId")
+  Optional<Address> findByClientId(long clientId);
 }
