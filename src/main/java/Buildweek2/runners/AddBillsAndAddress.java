@@ -47,7 +47,7 @@ public class AddBillsAndAddress implements CommandLineRunner {
             List<Client> clientList = clientService.getAllClients();
             List<User> userList = userService.getAllUsers();
             for (Client client : clientList) {
-                int repatition = new Random().nextInt(0, 5);
+                int repetition = new Random().nextInt(1, 5);
                 int m = new Random().nextInt(0, userList.size());
                 int n = new Random().nextInt(0, provinceList.size());
                 List<Municipality> municipalityList = provinceList.get(n).getMunicipalityList();
@@ -67,7 +67,7 @@ public class AddBillsAndAddress implements CommandLineRunner {
                     billService.save(userList.get(m).getId(), randomBill);
                 }
                 Municipality municipality = municipalityList.get(l);
-                for (int i = 0; i < repatition; i++) {
+                for (int i = 0; i < repetition; i++) {
                     AddressDTO randomAdress = new AddressDTO(faker.address().streetName(), faker.address().streetAddressNumber(), faker.address().firstName(), faker.address().zipCode(), municipality.getId(), client.getId());
                     addressesService.save(randomAdress);
                 }
