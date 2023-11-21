@@ -14,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import java.util.List;
 
 @Service
 public class BillService {
@@ -30,15 +30,14 @@ public class BillService {
     public Bill save(long userId, BillDTO body) {
         User user = userService.getById(userId);
         Client client = clientService.getSingleClient(body.clientId());
+        List<Bill> bills = this.getBillsListForClient(body.clientId());
         Bill newBill = new Bill();
         newBill.setAmount(body.amount());
         newBill.setState(body.billState());
         newBill.setUser(user);
         newBill.setClient(client);
         newBill.setDate(body.date());
-        newBill.setNumber(
-                new Random().nextLong(100000000000L, 1000000000000L)
-        );
+        newBill.setNumber(bills.size() + 1);
         return billRepository.save(newBill);
     }
 
@@ -46,6 +45,16 @@ public class BillService {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return billRepository.findAll(pageable);
     }
+
+    public Page<Bill> getBillsByClientId(Long clientId, int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return billRepository.findByClientId(clientId, pageable);
+    }
+
+    public List<Bill> getBillsListForClient(Long clientId) {
+        return billRepository.findByClientId(clientId);
+    }
+
 
     public Bill findById(long id) {
 

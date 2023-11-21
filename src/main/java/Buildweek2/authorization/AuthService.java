@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 public class AuthService {
@@ -80,6 +81,11 @@ public class AuthService {
 
     public Client save(NewClientDTO body) {
         Client newClient = new Client();
+        if (body.insertDate() != null) {
+            newClient.setInsertDate(body.insertDate());
+        } else {
+            newClient.setInsertDate(new Date());
+        }
         newClient.setBusinessName(body.businessName());
         newClient.setAnnualTurnHover(body.annualTurnHover());
         newClient.setContactName(body.contactName());
@@ -92,7 +98,11 @@ public class AuthService {
         newClient.setVATNumber(body.VATNumber());
         newClient.setCompanyLogo(body.companyLogo());
         newClient.setCompanyName(body.companyName());
-        newClient.setLastContractDate(LocalDate.now());
+        if (body.lastContractDate() != null) {
+            newClient.setLastContractDate(body.lastContractDate());
+        } else {
+            newClient.setLastContractDate(LocalDate.now());
+        }
         clientRepo.save(newClient);
         return newClient;
     }

@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/bills")
 public class BillController {
@@ -22,6 +24,20 @@ public class BillController {
                               @RequestParam(defaultValue = "10") int size,
                               @RequestParam(defaultValue = "id") String orderBy) {
         return billService.getBill(page, size, orderBy);
+    }
+
+    @GetMapping("/clientbill/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Page<Bill> getBillsByClientId(@PathVariable("id") long id, @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size,
+                                         @RequestParam(defaultValue = "id") String orderBy) {
+        return billService.getBillsByClientId(id, page, size, orderBy);
+    }
+
+    @GetMapping("/clientbilllist/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Bill> getBillsListForClientId(@PathVariable("id") long id) {
+        return billService.getBillsListForClient(id);
     }
 
     @PostMapping("/{id}")

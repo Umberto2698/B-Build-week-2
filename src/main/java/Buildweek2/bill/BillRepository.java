@@ -1,6 +1,16 @@
 package Buildweek2.bill;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BillRepository  extends JpaRepository<Bill, Long> {
+import java.util.List;
+
+@Repository
+public interface BillRepository extends JpaRepository<Bill, Long> {
+    Page<Bill> findByClientId(Long clientId, Pageable pageable);
+
+    List<Bill> findByClientId(Long clientId);
+
 }

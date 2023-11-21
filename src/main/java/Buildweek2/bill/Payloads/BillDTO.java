@@ -11,7 +11,6 @@ import java.time.LocalDate;
 
 public record BillDTO(
         @NotNull(message = "Amount field is required!") @Min(value = 1, message = "Value amount must be greater than or equal to 1 ") long amount,
-        @NotNull(message = "Date field is required!")
         LocalDate date,
         @NotEmpty(message = "Client Id Field Required!") Long clientId,
         @ValidBillState(enumClass = BillState.class,
