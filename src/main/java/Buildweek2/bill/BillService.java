@@ -50,13 +50,13 @@ public class BillService {
         Bill found1 = this.findById(id);
         billRepository.delete(found1);
     }
-    public List<Bill> getBillsByCustomer(Long clientId) {
+    public List<Bill> getBillsByClientId(Long clientId) {
         return billRepository.findByClientId(clientId).orElseThrow(()->new NotFoundException(clientId));
     }
    public List<Bill> billsPaidUnPaid (BillState state) {
 
        return  billRepository.findByState(state).orElseThrow(()->new NotFoundException("no Record"));
-   };
+   }
 
     public List<Bill> getBillsByDate(LocalDate startDate,LocalDate endDate) {
         return billRepository.findByDate(startDate,endDate).orElseThrow(()->new NotFoundException("no Record"));
