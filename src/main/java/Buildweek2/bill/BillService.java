@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+
 @Service
 public class BillService {
     @Autowired
@@ -29,7 +31,7 @@ public class BillService {
         Bill newBill = new Bill();
 
         newBill.setAmount(body.amount());
-        newBill.setState(body.billState());
+        //newBill.setState(body.billState());
         return billRepository.save(newBill);
     }
     public Page<Bill> getBill(int page, int size, String orderBy){
@@ -43,7 +45,10 @@ public class BillService {
     }
     public Bill changeStateBill(int id, BillPachDTO body) {
         Bill found1 = this.findById(id);
-        found1.setState(body.billState());
+        if (Objects.equals(body.billState(), "PAID")) {
+            found1.setState(BillState.PAID);
+        }else { found1.setState(BillState.UNPAID);}
+
         return found1;
 
     }
@@ -55,7 +60,7 @@ public class BillService {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return billRepository.findByClientId(clientId,pageable);
     }
-   public List<Bill> billsPaidUnPaid (BillState state) {
+   public List<Bill> billsPaidUnPaid (BillPachDTO state) {
 
        return  billRepository.findByState(state).orElseThrow(()->new NotFoundException("no Record"));
    }

@@ -12,7 +12,7 @@ public record BillDTO(@NotNull(message = "Amount field is required!") @Min(value
                       @NotEmpty(message = "User Id Field Required!") Long userId,
                       @ValidBillState(enumClass = BillState.class,
                       message = "The Bill can be:" +
-                              "  PAID or UNPAID") BillState billState
+                              "  PAID or UNPAID") String billState
 
 ) {
 }

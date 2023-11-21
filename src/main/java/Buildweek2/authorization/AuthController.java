@@ -5,6 +5,7 @@ import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
 import Buildweek2.user.payloads.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;

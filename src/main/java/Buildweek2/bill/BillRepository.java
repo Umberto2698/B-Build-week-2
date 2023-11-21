@@ -1,5 +1,6 @@
 package Buildweek2.bill;
 
+import Buildweek2.bill.Payloads.BillPachDTO;
 import Buildweek2.client.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface BillRepository  extends JpaRepository<Bill, Long> {
     Page<Bill> findByClientId(Long clientId, Pageable pageable);
-    Optional<List<Bill>> findByState(BillState state);
+    Optional<List<Bill>> findByState(BillPachDTO state);
     @Query("SELECT b FROM Bill b WHERE DATE(b.date) BETWEEN DATE(:startDate) AND DATE(:endDate)")
     Optional<List<Bill>> findByDate(@Param("startDate") LocalDate startDate,@Param("endDate") LocalDate endDate);
     @Query("SELECT b FROM Bill b WHERE EXTRACT(YEAR FROM b.date)= :year")

@@ -37,10 +37,10 @@ public record NewClientDTO(
         @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.pec\\.it$", message = "insert a valid pec")
         String pec,
         @NotEmpty(message = "field companyLogo cannot be empty!")
-        String companyLogo/*,
+        String companyLogo,
 
         @ValidBusinessName(enumClass = BusinessName.class,
                 message = "business name not valid")
-        BusinessName businessName*/
+        String businessName
 ) {
 }
