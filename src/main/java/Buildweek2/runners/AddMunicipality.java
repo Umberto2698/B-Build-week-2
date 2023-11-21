@@ -1,7 +1,7 @@
 package Buildweek2.runners;
 
-import Buildweek2.Address.Province.ProvincesService;
-import Buildweek2.Address.municipality.MunicipalitiesService;
+import Buildweek2.address.Province.ProvincesService;
+import Buildweek2.address.municipality.MunicipalitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;

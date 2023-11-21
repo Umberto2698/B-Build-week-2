@@ -26,26 +26,37 @@ public class ProvincesService {
         return pr.findByProvinceName(s);
     }
 
-    public void readProvinceFileCsv(String path) throws IOException {
+    public List<Province> getAllProvinces() {
+        return pr.findAll();
+    }
 
+    public void readProvinceFileCsv(String path) throws IOException {
         if (pr.findAll().isEmpty()) {
             try {
                 CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
                 CSVReader reader = new CSVReaderBuilder(new FileReader(path)).withCSVParser(parser).withSkipLines(1).build();
                 List<String[]> provinceRows = reader.readAll();
-                Boolean wasSaved = false;
-                List<String> listStringOld = List.of("Carbonia Iglesias", "Medio Campidano", "Ogliastra", "Olbia Tempio");
+                List<String> listStringOld = List.of("Carbonia Iglesias", "Medio Campidano", "Vibo-Valentia", "Ascoli-Piceno", "Reggio-Calabria", "Ogliastra", "Olbia Tempio", "Verbania", "Aosta", "Monza-Brianza", "Bolzano", "Forli-Cesena", "La-Spezia", "Reggio-Emilia", "Pesaro-Urbino");
                 List<String[]> listStringNew = new ArrayList<>();
                 listStringNew.add(new String[]{"SU", "Sud Sardegna", "Sardegna"});
-
-                for (int i = 0; i < provinceRows.size() - 1; i++) {
-
-                    if (listStringOld.contains(provinceRows.get(i)[1])) {
-                        provinceRows.remove(i);
-                    }
-                    Province province = this.createProvince(provinceRows.get(i));
+                listStringNew.add(new String[]{"VCO", "Verbano-Cusio-Ossola", "Piemonte"});
+                listStringNew.add(new String[]{"AO", "Valle d'Aosta/Vallée d'Aoste", "Valle d'Aosta"});
+                listStringNew.add(new String[]{"BZ", "Bolzano/Bozen", "Trentino Alto Adige"});
+                listStringNew.add(new String[]{"MB", "Monza e della Brianza", "Lombardia"});
+                listStringNew.add(new String[]{"FC", "Forlì-Cesena", "Emilia Romagna"});
+                listStringNew.add(new String[]{"SP", "La Spezia", "Liguria"});
+                listStringNew.add(new String[]{"RE", "Reggio nell'Emilia", "Emilia Romagna"});
+                listStringNew.add(new String[]{"PU", "Pesaro e Urbino", "Marche"});
+                listStringNew.add(new String[]{"AP", "Ascoli Piceno", "Marche"});
+                listStringNew.add(new String[]{"RC", "Reggio Calabria", "Calabria"});
+                listStringNew.add(new String[]{"VV", "Vibo Valentia", "Calabria"});
+                provinceRows.addAll(listStringNew);
+                List<String[]> last = provinceRows.stream().filter(array -> !listStringOld.contains(array[1])).toList();
+                for (int i = 0; i < last.size(); i++) {
+                    Province province = this.createProvince(last.get(i));
                     this.save(province);
                 }
+
 
             } catch (CsvException e) {
                 throw new RuntimeException(e);

@@ -43,7 +43,14 @@ public class AddClientsAndUsers implements CommandLineRunner {
                 String companyName = faker.company().name();
                 Date randomDate = faker.date().between(Date.from(LocalDate.now().minusYears(10).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.now().minusYears(1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
                 int randomMonth = randomDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth().getValue();
-                int randomDay = randomDate.toInstant().atZone(ZoneId.systemDefault()).getDayOfMonth();
+                int randomDay;
+                if (randomMonth == 2) {
+                    randomDay = new Random().nextInt(1, 28);
+                } else if (randomMonth == 11 || randomMonth == 9 || randomMonth == 4 || randomMonth == 6) {
+                    randomDay = new Random().nextInt(1, 30);
+                } else {
+                    randomDay = new Random().nextInt(1, 31);
+                }
                 int randomYear = new Random().nextInt(randomDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear(), currentYear);
                 LocalDate randomLastDate = LocalDate.of(randomYear, randomMonth, randomDay);
                 NewClientDTO randomClient = null;
