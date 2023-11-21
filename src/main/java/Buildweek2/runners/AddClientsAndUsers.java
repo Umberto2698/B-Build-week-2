@@ -8,10 +8,11 @@ import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-//@Component
+@Component
 @Order(1)
 public class AddClientsAndUsers implements CommandLineRunner {
     @Autowired
@@ -32,15 +33,15 @@ public class AddClientsAndUsers implements CommandLineRunner {
             String companyName = faker.company().name();
             NewClientDTO randomClient;
             if (i >= 13) {
-                randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", Long.parseLong(faker.phoneNumber().phoneNumber()), Long.parseLong(faker.phoneNumber().phoneNumber())
+                randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                         , companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
                         , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SAS);
             } else if (i < 13 && i >= 7) {
-                randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", Long.parseLong(faker.phoneNumber().phoneNumber()), Long.parseLong(faker.phoneNumber().phoneNumber())
+                randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                         , companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
                         , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SPA);
             } else {
-                randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", Long.parseLong(faker.phoneNumber().phoneNumber()), Long.parseLong(faker.phoneNumber().phoneNumber())
+                randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                         , companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
                         , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL);
             }

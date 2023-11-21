@@ -31,9 +31,9 @@ public class Client {
     @Column(name = "contact_email")
     private String contactEmail;
     @Column(name = "contact_phone")
-    private long contactPhone;
+    private String contactPhone;
     @Column(name = "phone")
-    private long phone;
+    private String phone;
     @CreationTimestamp
     @Column(name = "creation_date")
     private Date insertDate;
@@ -52,6 +52,7 @@ public class Client {
     @Column(name = "company_logo_url")
     private String companyLogo;
     @Column(name = "business_name")
+    @Enumerated(EnumType.STRING)
     private BusinessName businessName;
 
     @OneToMany(mappedBy = "client")

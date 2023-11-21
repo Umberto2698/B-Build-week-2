@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class AuthService {
     @Autowired
@@ -88,6 +90,9 @@ public class AuthService {
         newClient.setPec(body.pec());
         newClient.setPhone(body.phone());
         newClient.setVATNumber(body.VATNumber());
+        newClient.setCompanyLogo(body.companyLogo());
+        newClient.setCompanyName(body.companyName());
+        newClient.setLastContractDate(LocalDate.now());
         clientRepo.save(newClient);
         return newClient;
     }

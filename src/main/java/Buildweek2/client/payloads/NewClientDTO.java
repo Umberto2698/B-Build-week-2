@@ -7,8 +7,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-import java.time.LocalDate;
-
 public record NewClientDTO(
         @NotEmpty(message = "field contactName cannot be empty!")
         String contactName,
@@ -19,14 +17,14 @@ public record NewClientDTO(
         String contactEmail,
         @NotNull(message = "field contactPhone cannot be empty!")
         @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
-        Long contactPhone,
+        String contactPhone,
         @NotNull(message = "field phone cannot be empty!")
         @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
-        Long phone,
+        String phone,
         @NotEmpty(message = "field companyName cannot be empty!")
         String companyName,
         @NotEmpty(message = "field VATNumber cannot be empty!")
-        @Pattern(regexp = "^[0-9]{11}$",message = "insert a valid VAT")
+        @Pattern(regexp = "^[0-9]{11}$", message = "insert a valid VAT")
         String VATNumber,
         @NotEmpty(message = "field email cannot be empty!")
         @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "insert a valid email")

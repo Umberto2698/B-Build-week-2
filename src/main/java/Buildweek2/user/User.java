@@ -6,7 +6,6 @@ import com.github.javafaker.Faker;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +20,9 @@ import java.util.*;
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties({"createdAt", "password", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
+
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -72,14 +73,13 @@ public class User implements UserDetails {
     }
 
     public static class UserBuilder {
-        @Autowired
-        private Faker faker;
-        private String name = faker.name().firstName();
-        private String surname = faker.name().lastName();
+        Faker faker = new Faker(Locale.ITALY);
+        private String name = this.faker.name().firstName();
+        private String surname = this.faker.name().lastName();
         private String email = name + "." + surname + "@gmail.com";
         private String avatarUrl = "https://ui-avatars.com/api/?name=" + name + "+" + surname;
-        private String password = faker.phoneNumber().cellPhone();
-        private String username = faker.funnyName().name();
+        private String password = this.faker.phoneNumber().cellPhone();
+        private String username = this.faker.funnyName().name();
         private UserRole role = UserRole.USER;
     }
 }
