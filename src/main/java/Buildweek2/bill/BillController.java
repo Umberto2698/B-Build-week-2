@@ -3,12 +3,8 @@ package Buildweek2.bill;
 import Buildweek2.bill.Payloads.BillDTO;
 import Buildweek2.bill.Payloads.BillPachDTO;
 import Buildweek2.exceptions.BadRequestException;
-import Buildweek2.bill.validator.ValidBillState;
-import Buildweek2.exceptions.BadRequestException;
-import org.hibernate.boot.jaxb.spi.Binding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -67,38 +63,35 @@ public class BillController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public Bill changeStateBill(@PathVariable int id, @RequestBody @Validated BillPachDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
-            throw new BadRequestException(" ",validation.getAllErrors());
+            throw new BadRequestException(" ", validation.getAllErrors());
         }
         return billService.changeStateBill(id, body);
     }
-    @GetMapping("/clientbill/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-        public Page<Bill> getBillsByClientId(@PathVariable("id") long id,@RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size,
-        @RequestParam(defaultValue = "id") String orderBy){
-        return billService.getBillsByClientId(id,page, size, orderBy);
-    }
+
     @GetMapping("/billpaidunpaid")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByPaidUnpaid(@RequestParam("state") @Validated BillPachDTO state, BindingResult validation){
+    public List<Bill> getBillsByPaidUnpaid(@RequestParam("state") @Validated BillPachDTO state, BindingResult validation) {
         if (validation.hasErrors()) {
-            throw new BadRequestException("",validation.getAllErrors());
+            throw new BadRequestException("", validation.getAllErrors());
         }
         return billService.billsPaidUnPaid(state);
     }
+
     @GetMapping("/billperdate")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByDate(@RequestParam("startDate")LocalDate startDate,@RequestParam("endDate")LocalDate endDate ){
-        return billService.getBillsByDate(startDate,endDate);
+    public List<Bill> getBillsByDate(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
+        return billService.getBillsByDate(startDate, endDate);
     }
+
     @GetMapping("/billperyears")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByYears(@RequestParam("data")LocalDate data ){
+    public List<Bill> getBillsByYears(@RequestParam("data") LocalDate data) {
         return billService.getBillsByYear(data);
     }
+
     @GetMapping("/billAmounts")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByAmounts(@RequestParam("minAmount")Long minAmount,@RequestParam("maxAmount")Long maxAmount ){
-        return billService.findByRangeAmount(minAmount,maxAmount);
+    public List<Bill> getBillsByAmounts(@RequestParam("minAmount") Long minAmount, @RequestParam("maxAmount") Long maxAmount) {
+        return billService.findByRangeAmount(minAmount, maxAmount);
     }
 }

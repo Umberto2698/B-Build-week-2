@@ -37,20 +37,19 @@ public class ClientService {
     }
 
     public void removeClient(long id) {
-        Client toRemove = clientRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
+        Client toRemove = this.getSingleClient(id);
         clientRepo.delete(toRemove);
     }
 
     public Client findByIdAndUpdate(long id, ChangeClientInfoDTO body) {
-        Client found = clientRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
+        Client found = this.getSingleClient(id);
         found.setContactName(body.contactName());
         found.setContactSurname(body.contactSurname());
         found.setContactPhone(body.contactPhone());
         found.setEmail(body.email());
         found.setPhone(body.phone());
         found.setPec(body.pec());
-        clientRepo.save(found);
-        return found;
+        return clientRepo.save(found);
     }
 
     public Client uploadLogo(MultipartFile file, long id) throws IOException {

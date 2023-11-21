@@ -60,9 +60,9 @@ public class AddBillsAndAddress implements CommandLineRunner {
                                     .toLocalDate().plusYears(i).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
                             .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     if (i == lastYear - firstYear) {
-                        randomBill = new BillDTO(new Random().nextLong(1000000L, 100000000000L), billDate, client.getId(), BillState.UNPAID);
+                        randomBill = new BillDTO(new Random().nextLong(1000000L, 100000000000L), billDate, client.getId(), BillState.UNPAID.name());
                     } else {
-                        randomBill = new BillDTO(new Random().nextLong(1000000L, 100000000000L), billDate, client.getId(), BillState.PAID);
+                        randomBill = new BillDTO(new Random().nextLong(1000000L, 100000000000L), billDate, client.getId(), BillState.PAID.name());
                     }
                     billService.save(userList.get(m).getId(), randomBill);
                 }

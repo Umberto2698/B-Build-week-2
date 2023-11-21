@@ -1,5 +1,6 @@
 package Buildweek2.authorization;
 
+import Buildweek2.client.BusinessName;
 import Buildweek2.client.Client;
 import Buildweek2.client.ClientRepository;
 import Buildweek2.client.payloads.NewClientDTO;
@@ -8,6 +9,7 @@ import Buildweek2.exceptions.UnauthorizedException;
 import Buildweek2.security.JWTTools;
 import Buildweek2.user.User;
 import Buildweek2.user.UserRepository;
+import Buildweek2.user.UserRole;
 import Buildweek2.user.UserService;
 import Buildweek2.user.payloads.RoleUpdateDTO;
 import Buildweek2.user.payloads.UserDTO;
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -34,15 +35,14 @@ public class AuthService {
     @Autowired
     private ClientRepository clientRepo;
 
-    public String authenticateUser(UserLoginDTO body) throws Exception {
+    public String authenticateUser(UserLoginDTO body) {
         User user = userService.findByEmail(body.email());
         System.out.println(user.getEmail());
         System.out.println(bcrypt.matches(body.password(), user.getPassword()));
         if (bcrypt.matches(body.password(), user.getPassword())) {
             return jwtTools.createToken(user);
         } else {
-            //throw new UnauthorizedException("Email or password invalid.");
-            throw new IOException();
+            throw new UnauthorizedException("Email or password invalid.");
         }
     }
 
@@ -78,7 +78,7 @@ public class AuthService {
 
     public User updateRole(long id, RoleUpdateDTO body) {
         User found = userService.getById(id);
-        found.setRole(body.role());
+        found.setRole(UserRole.valueOf(body.role()));
         return userRepository.save(found);
     }
 
@@ -89,15 +89,15 @@ public class AuthService {
         } else {
             newClient.setInsertDate(new Date());
         }
-        newClient.setBusinessName(body.businessName());
+        newClient.setBusinessName(BusinessName.valueOf(body.businessName()));
         newClient.setAnnualTurnHover(body.annualTurnHover());
         newClient.setContactName(body.contactName());
         newClient.setContactEmail(body.contactEmail());
         newClient.setContactSurname(body.contactSurname());
-        newClient.setContactPhone(Long.parseLong(body.contactPhone()));
+        newClient.setContactPhone(body.contactPhone());
         newClient.setEmail(body.email());
         newClient.setPec(body.pec());
-        newClient.setPhone(Long.parseLong(body.phone()));
+        newClient.setPhone(body.phone());
         newClient.setVATNumber(body.VATNumber());
         newClient.setCompanyLogo(body.companyLogo());
         newClient.setCompanyName(body.companyName());

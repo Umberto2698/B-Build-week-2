@@ -57,27 +57,27 @@ public class AddClientsAndUsers implements CommandLineRunner {
                 if (i < 15) {
                     randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                             , randomDate, randomLastDate, companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
-                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SAS);
+                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SAS.name());
                 } else if (i >= 15 && i < 30) {
                     randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                             , randomDate, randomLastDate, companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
-                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SPA);
+                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SPA.name());
                 } else if (i >= 30 && i < 45) {
                     randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                             , randomDate, randomLastDate, companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
-                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL);
+                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL.name());
                 } else if (i >= 45 && i < 60) {
                     randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                             , randomDate, LocalDate.of(currentYear, randomMonth, randomDay), companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
-                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL);
+                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL.name());
                 } else if (i >= 60 && i < 75) {
                     randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                             , randomDate, LocalDate.of(currentYear, randomMonth, randomDay), companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
-                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL);
+                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL.name());
                 } else if (i >= 75) {
                     randomClient = new NewClientDTO(clientName, clientSurname, clientName + "." + clientSurname + "@gmail.com", faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber()
                             , randomDate, LocalDate.of(currentYear, randomMonth, randomDay), companyName, String.valueOf(new Random().nextLong(10000000000L, 100000000000L)), companyName.replaceAll(" ", "") + "@gmail.com"
-                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL);
+                            , new Random().nextLong(10000000L, 100000000000L), faker.commerce().color() + "@pec.it", faker.company().logo(), BusinessName.SRL.name());
                 }
                 authService.save(randomClient);
             }

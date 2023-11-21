@@ -5,7 +5,6 @@ import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
 import Buildweek2.user.payloads.*;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -60,12 +59,13 @@ public class AuthController {
     public UserDetails updateProfile(@AuthenticationPrincipal User currentUser, @RequestBody UserUpdateInfoDTO body) {
         return authService.update(currentUser.getId(), body);
     }
+
     @PostMapping("/client")
-   // @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation){
+    public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
             throw new BadRequestException("", validation.getAllErrors());
-        }return authService.save(body);
+        }
+        return authService.save(body);
     }
 }
