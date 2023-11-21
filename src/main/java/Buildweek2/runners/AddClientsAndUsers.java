@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.Random;
 
 @Component
-@Order(1)
+@Order(2)
 public class AddClientsAndUsers implements CommandLineRunner {
     @Autowired
     private Faker faker;

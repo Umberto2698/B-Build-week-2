@@ -1,4 +1,4 @@
-package Buildweek2.Address.municipality;
+package Buildweek2.address.municipality;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

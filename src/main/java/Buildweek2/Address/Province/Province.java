@@ -1,4 +1,4 @@
-package Buildweek2.Address.Province;
+package Buildweek2.address.Province;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,11 +13,11 @@ import lombok.Setter;
 @Setter
 @Table(name = "provinces")
 public class Province {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-  private String provinceAbbreviation;
-  private String provinceName;
-  private String region;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String provinceAbbreviation;
+    private String provinceName;
+    private String region;
 
 }

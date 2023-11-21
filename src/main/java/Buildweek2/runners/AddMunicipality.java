@@ -2,19 +2,18 @@ package Buildweek2.runners;
 
 import Buildweek2.Address.Province.ProvincesService;
 import Buildweek2.Address.municipality.MunicipalitiesService;
-import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(1)
 public class AddMunicipality implements CommandLineRunner {
     @Autowired
-    MunicipalitiesService ms;
+    private MunicipalitiesService ms;
     @Autowired
-    ProvincesService ps;
-    @Autowired
-    Faker faker;
+    private ProvincesService ps;
 
     @Override
     public void run(String... args) throws Exception {

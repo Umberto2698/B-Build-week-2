@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Random;
 
 @Component
-@Order(2)
-public class AddBills implements CommandLineRunner {
+@Order(3)
+public class AddBillsAndAddress implements CommandLineRunner {
     @Autowired
     private UserService userService;
     @Autowired
@@ -53,6 +53,7 @@ public class AddBills implements CommandLineRunner {
                     }
                     billService.save(userList.get(m).getId(), randomBill);
                 }
+
             }
         }
     }
