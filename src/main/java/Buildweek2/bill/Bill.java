@@ -3,7 +3,9 @@ package Buildweek2.bill;
 import Buildweek2.client.Client;
 import Buildweek2.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -11,6 +13,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "bills")
 public class Bill {
@@ -19,7 +23,7 @@ public class Bill {
     private long id;
     private LocalDate date;
     private long amount;
-    private int number;
+    private long number;
     @Enumerated(EnumType.STRING)
     private BillState state;
     @ManyToOne

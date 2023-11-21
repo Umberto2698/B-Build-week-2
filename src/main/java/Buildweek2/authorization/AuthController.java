@@ -21,7 +21,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) {
+    public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) throws Exception {
         return new UserSuccessLoginDTO(authService.authenticateUser(body));
     }
 
@@ -59,12 +59,13 @@ public class AuthController {
     public UserDetails updateProfile(@AuthenticationPrincipal User currentUser, @RequestBody UserUpdateInfoDTO body) {
         return authService.update(currentUser.getId(), body);
     }
+
     @PostMapping("/client")
-    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation){
+    public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
             throw new BadRequestException("", validation.getAllErrors());
-        }return authService.save(body);
+        }
+        return authService.save(body);
     }
 }

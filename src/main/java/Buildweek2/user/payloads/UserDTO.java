@@ -13,8 +13,5 @@ public record UserDTO(@NotEmpty(message = "The name is required.")
                       @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Insert a valid email.")
                       String email,
                       String username
-//                      @ValidRole(enumClass = UserRole.class, message = "The type of device must be one of these:" +
-//                              "USER, ADMIN")
-//                      UserRole role
 ) {
 }

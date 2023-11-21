@@ -10,11 +10,10 @@ public record AddressDTO(@NotEmpty(message = "The street is a required field")
                          @NotEmpty(message = "The location is a required field")
                          String location,
                          @NotNull(message = "The postalCode is a required field")
-                         Long postalCode,
-                         @NotEmpty(message = "The location is a required field")
-                         Long municipally,
-                         @NotEmpty(message = "The company id is a required field")
-                         String company
-
+                         String postalCode,
+                         @NotEmpty(message = "The municipallyId is a required field")
+                         Long municipallyId,
+                         @NotEmpty(message = "The clientId is a required field")
+                         Long clientId
 ) {
 }

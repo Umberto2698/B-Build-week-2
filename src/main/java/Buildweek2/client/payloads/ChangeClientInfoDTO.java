@@ -15,10 +15,10 @@ public record ChangeClientInfoDTO(
         String contactEmail,
         @NotNull(message = "field contactPhone cannot be empty!")
         @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
-        Long contactPhone,
+        String contactPhone,
         @NotNull(message = "field phone cannot be empty!")
         @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
-        Long phone,
+        String phone,
         @NotEmpty(message = "field email cannot be empty!")
         @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "insert a valid email")
         String email,

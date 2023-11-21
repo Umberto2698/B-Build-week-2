@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -23,6 +24,10 @@ public class UserService {
     public Page<User> getUsers(int page, int size, String orderBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return userRepository.findAll(pageable);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public User findByEmail(String email) {

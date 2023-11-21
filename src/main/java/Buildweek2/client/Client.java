@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -31,10 +30,9 @@ public class Client {
     @Column(name = "contact_email")
     private String contactEmail;
     @Column(name = "contact_phone")
-    private long contactPhone;
+    private String contactPhone;
     @Column(name = "phone")
-    private long phone;
-    @CreationTimestamp
+    private String phone;
     @Column(name = "creation_date")
     private Date insertDate;
     @Column(name = "company_name")
@@ -52,6 +50,7 @@ public class Client {
     @Column(name = "company_logo_url")
     private String companyLogo;
     @Column(name = "business_name")
+    @Enumerated(EnumType.STRING)
     private BusinessName businessName;
 
     @OneToMany(mappedBy = "client")
