@@ -21,7 +21,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) {
+    public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) throws Exception {
         return new UserSuccessLoginDTO(authService.authenticateUser(body));
     }
 
@@ -60,7 +60,7 @@ public class AuthController {
         return authService.update(currentUser.getId(), body);
     }
     @PostMapping("/client")
-    @PreAuthorize("hasAuthority('ADMIN')")
+   // @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation){
         if (validation.hasErrors()) {

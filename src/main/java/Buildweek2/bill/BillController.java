@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/bills")
 public class BillController {
     @Autowired
-    private BillService billService;
+    BillService billService;
     @GetMapping("")
     public Page<Bill> getBill(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size,
@@ -29,4 +29,12 @@ public class BillController {
     public Bill changeStateBill(@PathVariable int id, @RequestBody BillPachDTO body) {
         return billService.changeStateBill(id, body);
     }
+    @GetMapping("/clientbill/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+        public Page<Bill> getBillsByClientId(@PathVariable("id") long id,@RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "id") String orderBy){
+        return billService.getBillsByClientId(id,page, size, orderBy);
+    }
+
 }

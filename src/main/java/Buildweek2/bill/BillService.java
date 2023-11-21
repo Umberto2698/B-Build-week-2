@@ -10,13 +10,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@Service
 public class BillService {
     @Autowired
-    private BillRepository billRepository;
+    BillRepository billRepository;
 
     /* @Autowired
     private UtenteRepository utenteRepository;*/
@@ -50,8 +51,9 @@ public class BillService {
         Bill found1 = this.findById(id);
         billRepository.delete(found1);
     }
-    public List<Bill> getBillsByClientId(Long clientId) {
-        return billRepository.findByClientId(clientId).orElseThrow(()->new NotFoundException(clientId));
+    public Page<Bill> getBillsByClientId(Long clientId, int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return billRepository.findByClientId(clientId,pageable);
     }
    public List<Bill> billsPaidUnPaid (BillState state) {
 
