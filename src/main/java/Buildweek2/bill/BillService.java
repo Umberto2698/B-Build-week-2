@@ -2,12 +2,17 @@ package Buildweek2.bill;
 
 import Buildweek2.bill.Payloads.BillDTO;
 import Buildweek2.bill.Payloads.BillPachDTO;
+import Buildweek2.client.Client;
 import Buildweek2.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class BillService {
     @Autowired
@@ -45,5 +50,23 @@ public class BillService {
         Bill found1 = this.findById(id);
         billRepository.delete(found1);
     }
+    public List<Bill> getBillsByCustomer(Long clientId) {
+        return billRepository.findByClientId(clientId).orElseThrow(()->new NotFoundException(clientId));
+    }
+   public List<Bill> billsPaidUnPaid (BillState state) {
 
+       return  billRepository.findByState(state).orElseThrow(()->new NotFoundException("no Record"));
+   };
+
+    public List<Bill> getBillsByDate(LocalDate startDate,LocalDate endDate) {
+        return billRepository.findByDate(startDate,endDate).orElseThrow(()->new NotFoundException("no Record"));
+    }
+    public List<Bill> getBillsByYear(LocalDate date) {
+        int year = date.getYear();
+        return billRepository.findByDateYear(year).orElseThrow(()->new NotFoundException("no Record"));
+    }
+    public List<Bill> findByRangeAmount(Long minAmount,Long maxAmount) {
+
+        return billRepository.findByRangeAmount(minAmount,maxAmount).orElseThrow(()->new NotFoundException("no Record"));
+    }
 }
