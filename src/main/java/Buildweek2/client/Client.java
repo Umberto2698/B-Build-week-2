@@ -1,6 +1,6 @@
 package Buildweek2.client;
 
-import Buildweek2.address.Address;
+import Buildweek2.Address.Address;
 import Buildweek2.bill.Bill;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,41 +21,41 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Client {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name = "contact_name")
-    private String contactName;
-    @Column(name = "contact_surname")
-    private String contactSurname;
-    @Column(name = "contact_email")
-    private String contactEmail;
-    @Column(name = "contact_phone")
-    private long contactPhone;
-    @Column(name = "phone")
-    private long phone;
-    @CreationTimestamp
-    @Column(name = "creation_date")
-    private Date insertDate;
-    @Column(name = "company_name")
-    private String companyName;
-    @Column(name = "VAT_number")
-    private String VATNumber;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "last_contract_date")
-    private LocalDate lastContractDate;
-    @Column(name = "annual_turnhover")
-    private long annualTurnHover;
-    @Column(name = "pec")
-    private String pec;
-    @Column(name = "company_logo_url")
-    private String companyLogo;
-    @Column(name = "business_name")
-    private BusinessName businessName;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+  @Column(name = "contact_name")
+  private String contactName;
+  @Column(name = "contact_surname")
+  private String contactSurname;
+  @Column(name = "contact_email")
+  private String contactEmail;
+  @Column(name = "contact_phone")
+  private long contactPhone;
+  @Column(name = "phone")
+  private long phone;
+  @CreationTimestamp
+  @Column(name = "creation_date")
+  private Date insertDate;
+  @Column(name = "company_name")
+  private String companyName;
+  @Column(name = "VAT_number")
+  private String VATNumber;
+  @Column(name = "email")
+  private String email;
+  @Column(name = "last_contract_date")
+  private LocalDate lastContractDate;
+  @Column(name = "annual_turnhover")
+  private long annualTurnHover;
+  @Column(name = "pec")
+  private String pec;
+  @Column(name = "company_logo_url")
+  private String companyLogo;
+  @Column(name = "business_name")
+  private BusinessName businessName;
 
-    @OneToMany(mappedBy = "client")
-    private Set<Address> addresses = new HashSet<>();
-    @OneToMany(mappedBy = "client")
-    private Set<Bill> bills = new HashSet<>();
+  @OneToMany(mappedBy = "client")
+  private Set<Address> addresses = new HashSet<>();
+  @OneToMany(mappedBy = "client")
+  private Set<Bill> bills = new HashSet<>();
 }

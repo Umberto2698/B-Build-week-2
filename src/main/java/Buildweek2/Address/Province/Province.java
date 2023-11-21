@@ -1,4 +1,4 @@
-package Buildweek2.Address.municipality;
+package Buildweek2.Address.Province;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "provinces")
-public class Province implements CsvFileEntitiy {
+public class Province {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -20,19 +20,4 @@ public class Province implements CsvFileEntitiy {
   private String provinceName;
   private String region;
 
-
-  @Override
-  public void setFirstProperty(String string) {
-    setProvinceAbbreviation(string);
-  }
-
-  @Override
-  public void setSecondProperty(String string) {
-    setProvinceName(string);
-  }
-
-  @Override
-  public <T> void setThirdProperty(T string) {
-    setRegion((String) string);
-  }
 }

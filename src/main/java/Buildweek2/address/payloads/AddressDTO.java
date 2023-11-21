@@ -1,4 +1,4 @@
-package Buildweek2.address.payloads;
+package Buildweek2.Address.payloads;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
