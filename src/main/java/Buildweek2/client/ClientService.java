@@ -58,4 +58,11 @@ public class ClientService {
         found.setCompanyLogo(url);
         return clientRepo.save(found);
     }
+
+    public List<Client> findByCompanyNameStartingWith(String partialName) {
+        List<Client> clientList = clientRepo.findByPartialName(partialName);
+        System.out.println(clientList.size());
+        clientList.forEach(System.out::println);
+        return clientList;
+    }
 }

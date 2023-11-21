@@ -1,6 +1,7 @@
 package Buildweek2.client;
 
 import Buildweek2.client.payloads.ChangeClientInfoDTO;
+import Buildweek2.client.payloads.PartialClientNameDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,15 @@ public class ClientController {
     @PatchMapping("/upload/me")
     public Client updateProfilePicture(@RequestParam("avatar") MultipartFile body, @AuthenticationPrincipal User currentUser) throws IOException {
         return clientService.uploadLogo(body, currentUser.getId());
+    }
+
+    @GetMapping("/companyName")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Client> findByCompanyNameStartingWith(@RequestBody @Validated PartialClientNameDTO body, BindingResult validation) {
+        if (validation.hasErrors()) {
+            throw new BadRequestException("", validation.getAllErrors());
+        } else {
+            return clientService.findByCompanyNameStartingWith(body.companyName());
+        }
     }
 }
