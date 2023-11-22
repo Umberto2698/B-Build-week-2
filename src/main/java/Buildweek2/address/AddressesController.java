@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/adress")
+@RequestMapping("/addresses")
 public class AddressesController {
     @Autowired
     AddressesService addressesService;
