@@ -1,8 +1,13 @@
 package Buildweek2.user;
 
 import Buildweek2.authorization.AuthService;
+import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.exceptions.NotFoundException;
+import Buildweek2.exceptions.UnauthorizedException;
 import Buildweek2.user.payloads.UserDTO;
+import Buildweek2.user.payloads.UserLoginDTO;
+import Buildweek2.user.payloads.UserUpdateInfoDTO;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,21 +18,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class UsersServiceTests {
     @Autowired
-    UserService us;
+    private UserService userService;
     @Autowired
-    AuthService acs;
+    private AuthService authService;
+    @Autowired
+    private Faker faker;
     private User user;
     private UserDTO userDTO;
 
     @BeforeEach
     public void setUp() {
         userDTO = new UserDTO("Franck", "Johnson", "1234", "test@gmail.com", "Franco");
-        user = acs.save(userDTO);
+        user = authService.save(userDTO);
     }
 
     @AfterEach
     public void afterAll() {
-        us.delete(user.getId());
+        if (user != null) {
+            userService.delete(user.getId());
+        }
     }
 
     @Test
@@ -36,14 +45,39 @@ public class UsersServiceTests {
     }
 
     @Test
-    public void FindByEmailReturnNotFound() throws Exception {
+    public void FindByEmailReturnNotFound() {
         Assertions.assertThrows(NotFoundException.class, () -> {
-            us.findByEmail("basdas@asdsd.com");
+            userService.findByEmail("basdas@asdsd.com");
         });
     }
 
-//  @Test
-//  public void FindByIdAndUpdateReturnUpdatedUser(){
-//    U
-//  }
+    @Test
+    public void FindByIdAndUpdateReturnUpdatedUser() {
+        UserUpdateInfoDTO updatedUser = new UserUpdateInfoDTO("Bob", "Bob", faker.internet().emailAddress(), "pic1", "1234");
+        User updateUser = authService.update(user.getId(), updatedUser);
+        Assertions.assertNotEquals(user, updateUser);
+    }
+
+//    @Test
+//    public void FindByIdAndUpdateThrowBadRequest() throws IOException {
+//        UserUpdateInfoDTO updatedUser = new UserUpdateInfoDTO("Bob", "Bob", "notAnEmail", "pic1", "1234");
+//        Assertions.assertThrows(BadRequestException.class, () -> authService.update(user.getId(), updatedUser));
+//    }
+
+    @Test
+    public void DeleteByIdAndReturnNotFound() {
+        userService.delete(user.getId());
+        Assertions.assertThrows(NotFoundException.class, () -> userService.getById(user.getId()));
+        user = null;
+    }
+
+    @Test
+    public void RegisterUserUsingTheSameEmail() {
+        Assertions.assertThrows(BadRequestException.class, () -> authService.save(userDTO));
+    }
+
+    @Test
+    public void LoginUserWithInvalidPassword() {
+        Assertions.assertThrows(UnauthorizedException.class, () -> authService.authenticateUser(new UserLoginDTO("test@gmail.com", "1")));
+    }
 }

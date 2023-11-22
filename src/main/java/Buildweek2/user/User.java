@@ -48,6 +48,19 @@ public class User implements UserDetails {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(email, user.email) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, email, password, username, role, avatarUrl, createdAt, bills);
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
         return true;
     }

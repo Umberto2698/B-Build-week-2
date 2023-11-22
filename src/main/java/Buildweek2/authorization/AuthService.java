@@ -50,7 +50,7 @@ public class AuthService {
         userRepository.findByEmail(body.email()).ifPresent(a -> {
             throw new BadRequestException("The email" + a.getEmail() + " is alredy used.");
         });
-        User user = null;
+        User user;
         if (!body.username().isEmpty()) {
             user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.username()).build();
         } else {
