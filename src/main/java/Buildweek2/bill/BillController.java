@@ -98,7 +98,7 @@ public class BillController {
 
     @GetMapping("/billCompany")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public FindByPartialCompanyNameDTO getBillsByPartialCompanyName(String partialName) {
-        return billService.findByPartialCompanyName(partialName);
+    public FindByPartialCompanyNameDTO getBillsByPartialCompanyName(@RequestParam("name") String name) {
+        return billService.findByPartialCompanyName(name);
     }
 }

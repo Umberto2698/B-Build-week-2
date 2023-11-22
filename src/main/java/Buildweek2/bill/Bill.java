@@ -29,7 +29,6 @@ public class Bill {
     private BillState state;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    @JsonIgnore
     private Client client;
 
     @ManyToOne
