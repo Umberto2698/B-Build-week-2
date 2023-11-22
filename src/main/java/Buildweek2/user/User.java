@@ -19,7 +19,7 @@ import java.util.*;
 @Builder(builderClassName = "UserBuilder")
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties({"createdAt", "password", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
+@JsonIgnoreProperties({"createdAt", "password", "authorities", "bills", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
 
 public class User implements UserDetails {
 
