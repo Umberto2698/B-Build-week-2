@@ -52,17 +52,22 @@ public class UsersServiceTests {
     }
 
     @Test
+    public void FindByIdReturnNotFound() {
+        Assertions.assertThrows(NotFoundException.class, () -> userService.getById(-1L));
+    }
+
+    @Test
+    public void FindByIdAndReturnCorrectUser() {
+        User found = userService.getById(user.getId());
+        Assertions.assertEquals(user, found);
+    }
+
+    @Test
     public void FindByIdAndUpdateReturnUpdatedUser() {
         UserUpdateInfoDTO updatedUser = new UserUpdateInfoDTO("Bob", "Bob", faker.internet().emailAddress(), "pic1", "1234");
         User updateUser = authService.update(user.getId(), updatedUser);
         Assertions.assertNotEquals(user, updateUser);
     }
-
-//    @Test
-//    public void FindByIdAndUpdateThrowBadRequest() throws IOException {
-//        UserUpdateInfoDTO updatedUser = new UserUpdateInfoDTO("Bob", "Bob", "notAnEmail", "pic1", "1234");
-//        Assertions.assertThrows(BadRequestException.class, () -> authService.update(user.getId(), updatedUser));
-//    }
 
     @Test
     public void DeleteByIdAndReturnNotFound() {
