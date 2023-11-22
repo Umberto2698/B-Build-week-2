@@ -24,6 +24,16 @@ END-POINTS(legend)
 
 {{ClientsperTurnHover}} = Request that retrieves all Clients within a specified TurnHover range. NOTE: Please include minAmount=(ex. 0) and maxAmount=(ex. 100000) and select GET command.
 
-{{ClientsperData}} = Request that returns all Clients within that time period. NOTE: Include startDate=(YYYY-MM-DD)&endDate=(YYYY-MM-DD) and select GET command.
+{{ClientsperData}} = Request that returns all Clients filtered by insert date. NOTE: Include startDate=(YYYY-MM-DD)&endDate=(YYYY-MM-DD) and select GET command.
+
+{{ClientperDateLastContract}} = Request that returns all Clients filtered by last contract date. NOTE: Include startDate=(YYYY-MM-DD)&endDate=(YYYY-MM-DD) and select GET command.
 
 {{ClientsperCompany}} = Request that retrieves all Clients from the desired company. NOTE: Please include the company name, ex. Franco Rossi SPA and select GET command.
+
+{{AllUserPage}} = Request that retrieves all User. NOTE: Please select GET command.
+
+{{UsersperIdUsers}} = Request that retrieves all Users from the desired id_user.  NOTE: Please include the id_user number, ex. 1 and select GET command.
+
+{{DeleteUserperid}} = Delete all Users from the desired id_user.  NOTE: Please include the id_user number, ex. 1 and select DELETE command.
+
+{{CurrentUser}} = Request that retrieves the Current User.  NOTE: select GET command.
