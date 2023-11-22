@@ -5,9 +5,9 @@ import Buildweek2.address.Province.Province;
 import Buildweek2.address.Province.ProvincesService;
 import Buildweek2.address.municipality.Municipality;
 import Buildweek2.address.payloads.AddressDTO;
+import Buildweek2.bill.Bill;
 import Buildweek2.bill.BillService;
 import Buildweek2.bill.BillState;
-import Buildweek2.bill.Payloads.BillDTO;
 import Buildweek2.client.Client;
 import Buildweek2.client.ClientService;
 import Buildweek2.user.User;
@@ -52,7 +52,7 @@ public class AddBillsAndAddress implements CommandLineRunner {
                 int n = new Random().nextInt(0, provinceList.size());
                 List<Municipality> municipalityList = provinceList.get(n).getMunicipalityList();
                 int l = new Random().nextInt(0, municipalityList.size());
-                BillDTO randomBill;
+                Bill randomBill = new Bill();
                 int firstYear = client.getInsertDate().toInstant().atZone(ZoneId.systemDefault()).getYear();
                 int lastYear = client.getLastContractDate().getYear();
                 for (int i = 0; i <= lastYear - firstYear; i++) {
@@ -60,11 +60,21 @@ public class AddBillsAndAddress implements CommandLineRunner {
                                     .toLocalDate().plusYears(i).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
                             .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     if (i == lastYear - firstYear) {
-                        randomBill = new BillDTO(new Random().nextLong(1000000L, 100000000000L), billDate, client.getId(), BillState.UNPAID.name());
+                        randomBill.setDate(billDate);
+                        randomBill.setAmount(new Random().nextLong(1000L, 10000L));
+                        randomBill.setUser(userList.get(m));
+                        randomBill.setClient(client);
+                        randomBill.setNumber(i + 1);
+                        randomBill.setState(BillState.UNPAID);
                     } else {
-                        randomBill = new BillDTO(new Random().nextLong(1000000L, 100000000000L), billDate, client.getId(), BillState.PAID.name());
+                        randomBill.setDate(billDate);
+                        randomBill.setAmount(new Random().nextLong(1000L, 10000L));
+                        randomBill.setUser(userList.get(m));
+                        randomBill.setClient(client);
+                        randomBill.setNumber(i + 1);
+                        randomBill.setState(BillState.PAID);
                     }
-                    billService.save(userList.get(m).getId(), randomBill);
+                    billService.runnerSave(randomBill);
                 }
                 Municipality municipality = municipalityList.get(l);
                 for (int i = 0; i < repetition; i++) {
