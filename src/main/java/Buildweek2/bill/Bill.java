@@ -19,20 +19,30 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "bills")
 public class Bill {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private LocalDate date;
-    private long amount;
-    private long number;
-    @Enumerated(EnumType.STRING)
-    private BillState state;
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Client client;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+  private LocalDate date;
+  private long amount;
+  private long number;
+  @Enumerated(EnumType.STRING)
+  private BillState state;
+  @ManyToOne
+  @JoinColumn(name = "cliente_id")
+  private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  @JsonIgnore
+  private User user;
+
+  @Override
+  public String toString() {
+    return "Bill{" +
+            "id=" + id +
+            ", date=" + date +
+            ", amount=" + amount +
+            ", state=" + state +
+            '}';
+  }
 }
