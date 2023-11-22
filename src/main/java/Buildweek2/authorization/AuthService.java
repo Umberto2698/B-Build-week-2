@@ -50,7 +50,7 @@ public class AuthService {
         userRepository.findByEmail(body.email()).ifPresent(a -> {
             throw new BadRequestException("The email" + a.getEmail() + " is alredy used.");
         });
-        User user = null;
+        User user;
         if (!body.username().isEmpty()) {
             user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.username()).build();
         } else {
@@ -83,30 +83,24 @@ public class AuthService {
     }
 
     public Client save(NewClientDTO body) {
-        Client newClient = new Client();
-        if (body.insertDate() != null) {
-            newClient.setInsertDate(body.insertDate());
+        Client newClient;
+        if (body.insertDate() != null && body.lastContractDate() != null) {
+            newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
+                    .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
+                    .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(body.insertDate()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(body.lastContractDate()).build();
+        } else if (body.insertDate() == null && body.lastContractDate() != null) {
+            newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
+                    .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
+                    .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(new Date()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(body.lastContractDate()).build();
+        } else if (body.insertDate() != null && body.lastContractDate() == null) {
+            newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
+                    .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
+                    .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(body.insertDate()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(LocalDate.now()).build();
         } else {
-            newClient.setInsertDate(new Date());
+            newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
+                    .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
+                    .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(new Date()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(LocalDate.now()).build();
         }
-        newClient.setBusinessName(BusinessName.valueOf(body.businessName()));
-        newClient.setAnnualTurnHover(body.annualTurnHover());
-        newClient.setContactName(body.contactName());
-        newClient.setContactEmail(body.contactEmail());
-        newClient.setContactSurname(body.contactSurname());
-        newClient.setContactPhone(body.contactPhone());
-        newClient.setEmail(body.email());
-        newClient.setPec(body.pec());
-        newClient.setPhone(body.phone());
-        newClient.setVATNumber(body.VATNumber());
-        newClient.setCompanyLogo(body.companyLogo());
-        newClient.setCompanyName(body.companyName());
-        if (body.lastContractDate() != null) {
-            newClient.setLastContractDate(body.lastContractDate());
-        } else {
-            newClient.setLastContractDate(LocalDate.now());
-        }
-        clientRepo.save(newClient);
-        return newClient;
+        return clientRepo.save(newClient);
     }
 }
