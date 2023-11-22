@@ -61,20 +61,20 @@ public class ClientController {
     public Client updateProfilePicture(@RequestParam("avatar") MultipartFile body, @AuthenticationPrincipal User currentUser) throws IOException {
         return clientService.uploadLogo(body, currentUser.getId());
     }
-    @GetMapping("/turnHover")
-    public List<Client> getByTurnHover(@RequestParam("amount") long amount){
-        return clientService.filterByTurnHover(amount);
+    @GetMapping("/turnhover")
+    public List<Client> getByTurnHover(@RequestParam("startAmount") long startAmount, @RequestParam("endAmount") long endAmount){
+        return clientService.filterByTurnHover(startAmount, endAmount);
     }
     @GetMapping("/date")
     public List<Client> getByRangeInsertDate(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate){
         return clientService.filterByInsertDate(startDate, endDate);
     }
-    @GetMapping("/lastContract")
+    @GetMapping("/lastcontract")
     public List<Client> getByRangeLastContract(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate){
         return clientService.filterByLastContractDate(startDate, endDate);
     }
 
-    @GetMapping("/companyName")
+    @GetMapping("/companyname")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Client> findByCompanyNameStartingWith(@RequestParam("name") String body) {
         return clientService.findByCompanyNameStartingWith(body);

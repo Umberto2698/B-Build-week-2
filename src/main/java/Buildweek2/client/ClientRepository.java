@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    @Query("SELECT c FROM Client c WHERE c.annualTurnHover = :annualTurnHover")
-    Optional<List<Client>> filterByTurnHover(@Param("annualTurnHover") long annualTurnHover);
+    @Query("SELECT c FROM Client c WHERE c.annualTurnHover BETWEEN :startAnnualTurnHover AND :endAnnualTurnHover")
+    Optional<List<Client>> filterByTurnHover(@Param("startAnnualTurnHover") long annualTurnHover, @Param("endAnnualTurnHover") long endAnnualTurnHover);
 
     @Query("SELECT c FROM Client c WHERE DATE(c.insertDate) BETWEEN DATE(:startDate) AND DATE(:endDate)")
     Optional<List<Client>> filterByInsertDate(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
