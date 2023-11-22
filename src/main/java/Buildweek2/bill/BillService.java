@@ -40,9 +40,12 @@ public class BillService {
         newBill.setState(BillState.valueOf(body.billState()));
         newBill.setUser(user);
         newBill.setClient(client);
-        newBill.setDate(body.date());
         newBill.setNumber(bills.size() + 1);
         return billRepository.save(newBill);
+    }
+
+    public Bill runnerSave(Bill body) {
+        return billRepository.save(body);
     }
 
     public Page<Bill> getBill(int page, int size, String orderBy) {
