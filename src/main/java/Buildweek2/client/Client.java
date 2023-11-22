@@ -4,14 +4,12 @@ import Buildweek2.address.Address;
 import Buildweek2.bill.Bill;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -20,6 +18,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(builderClassName = "ClientBuilder")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,4 +58,20 @@ public class Client {
     @OneToMany(mappedBy = "client")
     @JsonIgnore
     private Set<Bill> bills = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id && Objects.equals(contactName, client.contactName) && Objects.equals(contactSurname, client.contactSurname) && Objects.equals(contactEmail, client.contactEmail) && Objects.equals(contactPhone, client.contactPhone) && Objects.equals(phone, client.phone) && Objects.equals(companyName, client.companyName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, contactName, contactSurname, contactEmail, contactPhone, phone, insertDate, companyName, VATNumber, email, lastContractDate, annualTurnHover, pec, companyLogo, businessName, addresses, bills);
+    }
+
+    public static class ClientBuilder {
+    }
 }
