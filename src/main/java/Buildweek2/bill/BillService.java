@@ -84,17 +84,18 @@ public class BillService {
         billRepository.delete(found1);
     }
 
-    public List<Bill> billsPaidUnPaid(BillPachDTO state) {
-
-        return billRepository.findByState(state).orElseThrow(() -> new NotFoundException("no Record"));
+    public List<Bill> billsPaidUnPaid(String state) {
+        if (Objects.equals(state, BillState.PAID.name())) {
+            return billRepository.findByState(BillState.PAID).orElseThrow(()->new NotFoundException("Value not Found!"));
+        }else { return billRepository.findByState(BillState.UNPAID).orElseThrow(()->new NotFoundException("Value not Found!"));}
     }
 
     public List<Bill> getBillsByDate(LocalDate startDate, LocalDate endDate) {
         return billRepository.findByDate(startDate, endDate).orElseThrow(() -> new NotFoundException("no Record"));
     }
 
-    public List<Bill> getBillsByYear(LocalDate date) {
-        int year = date.getYear();
+    public List<Bill> getBillsByYear(int year) {
+
         return billRepository.findByDateYear(year).orElseThrow(() -> new NotFoundException("no Record"));
     }
 

@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface BillRepository  extends JpaRepository<Bill, Long> {
     Page<Bill> findByClientId(Long clientId, Pageable pageable);
     List<Bill> findByClientId(Long clientId);
-    Optional<List<Bill>> findByState(BillPachDTO state);
+    Optional<List<Bill>> findByState(BillState state);
     @Query("SELECT b FROM Bill b WHERE DATE(b.date) BETWEEN DATE(:startDate) AND DATE(:endDate)")
     Optional<List<Bill>> findByDate(@Param("startDate") LocalDate startDate,@Param("endDate") LocalDate endDate);
     @Query("SELECT b FROM Bill b WHERE EXTRACT(YEAR FROM b.date)= :year")

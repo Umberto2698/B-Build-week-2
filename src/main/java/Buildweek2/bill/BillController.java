@@ -71,10 +71,8 @@ public class BillController {
 
     @GetMapping("/billpaidunpaid")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByPaidUnpaid(@RequestParam("state") @Validated BillPachDTO state, BindingResult validation) {
-        if (validation.hasErrors()) {
-            throw new BadRequestException("", validation.getAllErrors());
-        }
+    public List<Bill> getBillsByPaidUnpaid(@RequestParam("state")  String state) {
+
         return billService.billsPaidUnPaid(state);
     }
 
@@ -86,17 +84,17 @@ public class BillController {
 
     @GetMapping("/billperyears")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByYears(@RequestParam("data") LocalDate data) {
-        return billService.getBillsByYear(data);
+    public List<Bill> getBillsByYears(@RequestParam("year") int year) {
+        return billService.getBillsByYear(year);
     }
 
-    @GetMapping("/billAmounts")
+    @GetMapping("/billsperamounts")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Bill> getBillsByAmounts(@RequestParam("minAmount") Long minAmount, @RequestParam("maxAmount") Long maxAmount) {
         return billService.findByRangeAmount(minAmount, maxAmount);
     }
 
-    @GetMapping("/billCompany")
+    @GetMapping("/billspercompany")
     @PreAuthorize("hasAuthority('ADMIN')")
     public FindByPartialCompanyNameDTO getBillsByPartialCompanyName(@RequestParam("name") String name) {
         return billService.findByPartialCompanyName(name);
