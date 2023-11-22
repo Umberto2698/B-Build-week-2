@@ -19,10 +19,10 @@ public record NewClientDTO(
         @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "insert a valid email")
         String contactEmail,
         @NotNull(message = "field contactPhone cannot be empty!")
-        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
+        @Pattern(regexp = "^\\+?\\d{1,3}(\\s*\\d){7,}$", message = "insert a valid phone number")
         String contactPhone,
         @NotNull(message = "field phone cannot be empty!")
-        @Pattern(regexp = "^(\\\\+\\\\d{1,3}[- ]?)?\\\\d{8,}$", message = "insert a valid phone number")
+        @Pattern(regexp = "^\\+?\\d{1,3}(\\s*\\d){7,}$", message = "insert a valid phone number")
         String phone,
         Date insertDate,
         LocalDate lastContractDate,
@@ -37,7 +37,7 @@ public record NewClientDTO(
         @NotNull(message = "field annualTurnHover cannot be empty!")
         Long annualTurnHover,
         @NotEmpty(message = "field pec cannot be empty!")
-        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.pec\\.it$", message = "insert a valid pec")
+        @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9-]+\\.)?pec\\.it$", message = "insert a valid pec")
         String pec,
         @NotEmpty(message = "field companyLogo cannot be empty!")
         String companyLogo,
