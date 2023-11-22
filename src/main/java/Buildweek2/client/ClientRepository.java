@@ -20,7 +20,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("SELECT c FROM Client c WHERE DATE(c.lastContractDate) BETWEEN DATE(:startDate) AND DATE(:endDate)")
     Optional<List<Client>> filterByLastContractDate(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query("SELECT c FROM Client c WHERE c.companyName LIKE :partialName%")
+    @Query("SELECT c FROM Client c WHERE LOWER(c.companyName) LIKE LOWER(CONCAT('%', :partialName, '%'))")
     Optional<List<Client>> filterByPartialName(@Param("partialName") String partialToSearch);
     
 }
