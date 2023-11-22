@@ -73,8 +73,10 @@ public class ClientController {
     public List<Client> getByRangeLastContract(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate){
         return clientService.filterByLastContractDate(startDate, endDate);
     }
-    @GetMapping("/name/{name}")
-    public List<Client> getByPartialName(@PathVariable("name") String name){
-        return clientService.filterByPartialName(name);
+
+    @GetMapping("/companyName")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Client> findByCompanyNameStartingWith(@RequestParam("name") String body) {
+        return clientService.findByCompanyNameStartingWith(body);
     }
 }

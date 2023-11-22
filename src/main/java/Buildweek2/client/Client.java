@@ -2,6 +2,7 @@ package Buildweek2.client;
 
 import Buildweek2.address.Address;
 import Buildweek2.bill.Bill;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -56,5 +57,6 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private Set<Address> addresses = new HashSet<>();
     @OneToMany(mappedBy = "client")
+    @JsonIgnore
     private Set<Bill> bills = new HashSet<>();
 }

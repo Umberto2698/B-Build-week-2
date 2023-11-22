@@ -2,6 +2,7 @@ package Buildweek2.address;
 
 import Buildweek2.address.municipality.Municipality;
 import Buildweek2.client.Client;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +28,6 @@ public class Address {
     private Municipality municipality;
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnore
     private Client client;
 }

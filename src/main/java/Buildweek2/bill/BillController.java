@@ -2,6 +2,7 @@ package Buildweek2.bill;
 
 import Buildweek2.bill.Payloads.BillDTO;
 import Buildweek2.bill.Payloads.BillPachDTO;
+import Buildweek2.bill.Payloads.FindByPartialCompanyNameDTO;
 import Buildweek2.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -93,5 +94,11 @@ public class BillController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Bill> getBillsByAmounts(@RequestParam("minAmount") Long minAmount, @RequestParam("maxAmount") Long maxAmount) {
         return billService.findByRangeAmount(minAmount, maxAmount);
+    }
+
+    @GetMapping("/billCompany")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public FindByPartialCompanyNameDTO getBillsByPartialCompanyName(@RequestParam("name") String name) {
+        return billService.findByPartialCompanyName(name);
     }
 }

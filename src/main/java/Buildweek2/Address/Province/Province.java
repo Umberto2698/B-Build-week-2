@@ -1,6 +1,7 @@
 package Buildweek2.address.Province;
 
 import Buildweek2.address.municipality.Municipality;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +28,6 @@ public class Province {
     @Column(name = "region")
     private String region;
     @OneToMany(mappedBy = "province", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Municipality> municipalityList = new ArrayList<>();
 }

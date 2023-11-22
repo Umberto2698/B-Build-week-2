@@ -2,6 +2,7 @@ package Buildweek2.bill;
 
 import Buildweek2.client.Client;
 import Buildweek2.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,5 +33,6 @@ public class Bill {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 }

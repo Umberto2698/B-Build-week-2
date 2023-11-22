@@ -2,6 +2,7 @@ package Buildweek2.bill;
 
 import Buildweek2.bill.Payloads.BillDTO;
 import Buildweek2.bill.Payloads.BillPachDTO;
+import Buildweek2.bill.Payloads.FindByPartialCompanyNameDTO;
 import Buildweek2.client.Client;
 import Buildweek2.client.ClientService;
 import Buildweek2.exceptions.NotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -99,5 +101,15 @@ public class BillService {
     public List<Bill> findByRangeAmount(Long minAmount, Long maxAmount) {
 
         return billRepository.findByRangeAmount(minAmount, maxAmount).orElseThrow(() -> new NotFoundException("no Record"));
+    }
+
+    public FindByPartialCompanyNameDTO findByPartialCompanyName(String partialCompanyName) {
+        List<Client> clientList = clientService.findByCompanyNameStartingWith(partialCompanyName);
+        List<List<Bill>> bills = new ArrayList<>();
+        for (Client client : clientList) {
+            List<Bill> found = this.getBillsListForClient(client.getId());
+            bills.add(found);
+        }
+        return new FindByPartialCompanyNameDTO(bills);
     }
 }
