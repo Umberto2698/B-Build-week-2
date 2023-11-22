@@ -47,7 +47,7 @@ public class ClientController {
         clientService.removeClient(id);
     }
 
-    @PutMapping("/changeClientInfo/{clientId}")
+    @PutMapping("/changeclientinfo/{clientId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public Client changeClientInfo(@PathVariable("clientId") long id, @RequestBody @Validated ChangeClientInfoDTO body, BindingResult validation) {
