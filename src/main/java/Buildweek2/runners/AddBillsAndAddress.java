@@ -52,10 +52,10 @@ public class AddBillsAndAddress implements CommandLineRunner {
                 int n = new Random().nextInt(0, provinceList.size());
                 List<Municipality> municipalityList = provinceList.get(n).getMunicipalityList();
                 int l = new Random().nextInt(0, municipalityList.size());
-                Bill randomBill = new Bill();
                 int firstYear = client.getInsertDate().toInstant().atZone(ZoneId.systemDefault()).getYear();
                 int lastYear = client.getLastContractDate().getYear();
                 for (int i = 0; i <= lastYear - firstYear; i++) {
+                    Bill randomBill = new Bill();
                     LocalDate billDate = Date.from(client.getInsertDate().toInstant().atZone(ZoneId.systemDefault())
                                     .toLocalDate().plusYears(i).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
                             .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
