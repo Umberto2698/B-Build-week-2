@@ -58,7 +58,7 @@ public class UserController {
 
     @DeleteMapping("/me")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProile(@AuthenticationPrincipal User currentUser) {
+    public void deleteProfile(@AuthenticationPrincipal User currentUser) {
         userService.delete(currentUser.getId());
     }
 
