@@ -60,7 +60,7 @@ public class ClientService {
     }
 
     public List<Client> findByCompanyNameStartingWith(String partialName) {
-        List<Client> clientList = clientRepo.findByPartialName(partialName);
+        List<Client> clientList = clientRepo.filterByPartialName(partialName).orElseThrow(() -> new NotFoundException("No company with this name."));
         System.out.println(clientList.size());
         clientList.forEach(System.out::println);
         return clientList;

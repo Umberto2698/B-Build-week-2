@@ -2,6 +2,7 @@ package Buildweek2.bill;
 
 import Buildweek2.client.Client;
 import Buildweek2.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,9 +29,11 @@ public class Bill {
     private BillState state;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
     private Client client;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 }

@@ -1,7 +1,6 @@
 package Buildweek2.client;
 
 import Buildweek2.client.payloads.ChangeClientInfoDTO;
-import Buildweek2.client.payloads.PartialClientNameDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,11 +63,7 @@ public class ClientController {
 
     @GetMapping("/companyName")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Client> findByCompanyNameStartingWith(@RequestBody @Validated PartialClientNameDTO body, BindingResult validation) {
-        if (validation.hasErrors()) {
-            throw new BadRequestException("", validation.getAllErrors());
-        } else {
-            return clientService.findByCompanyNameStartingWith(body.companyName());
-        }
+    public List<Client> findByCompanyNameStartingWith(@RequestParam("name") String body) {
+        return clientService.findByCompanyNameStartingWith(body);
     }
 }
