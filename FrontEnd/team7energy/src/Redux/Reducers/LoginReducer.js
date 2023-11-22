@@ -1,6 +1,6 @@
 const initialState = {
   validationContent: {
-    username: "",
+    email: "",
     password: "",
   },
   respLogin: {
