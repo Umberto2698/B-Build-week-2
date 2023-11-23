@@ -38,7 +38,7 @@ public class MunicipalitiesService {
                 CSVReader reader = new CSVReaderBuilder(new FileReader(path)).withCSVParser(parser).withSkipLines(1).build();
                 List<String[]> municipalitiesRows = reader.readAll();
 
-                for (int i = 0; i < municipalitiesRows.size() - 1; i++) {
+                for (int i = 0; i < municipalitiesRows.size(); i++) {
                     Municipality entity = this.createMunicipality(municipalitiesRows.get(i));
                     this.saveMunicapality(entity);
                 }

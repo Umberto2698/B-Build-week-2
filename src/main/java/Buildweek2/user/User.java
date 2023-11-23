@@ -79,14 +79,29 @@ public class User implements UserDetails {
     return true;
   }
 
-  public static class UserBuilder {
-    Faker faker = new Faker(Locale.ITALY);
-    private String name = this.faker.name().firstName();
-    private String surname = this.faker.name().lastName();
-    private String email = name + "." + surname + "@gmail.com";
-    private String avatarUrl = "https://ui-avatars.com/api/?name=" + name + "+" + surname;
-    private String password = this.faker.phoneNumber().cellPhone();
-    private String username = this.faker.funnyName().name();
-    private UserRole role = UserRole.USER;
-  }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", role=" + role +
+                '}';
+    }
+    
+    public static class UserBuilder {
+        Faker faker = new Faker(Locale.ITALY);
+        private String name = this.faker.name().firstName();
+        private String surname = this.faker.name().lastName();
+        private String email = name + "." + surname + "@gmail.com";
+        private String avatarUrl = "https://ui-avatars.com/api/?name=" + name + "+" + surname;
+        private String password = this.faker.phoneNumber().cellPhone();
+        private String username = this.faker.funnyName().name();
+        private UserRole role = UserRole.ADMIN;
+
+    }
 }
