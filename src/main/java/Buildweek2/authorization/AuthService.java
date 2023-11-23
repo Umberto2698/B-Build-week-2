@@ -37,8 +37,6 @@ public class AuthService {
 
     public String authenticateUser(UserLoginDTO body) {
         User user = userService.findByEmail(body.email());
-        System.out.println(user.getEmail());
-        System.out.println(bcrypt.matches(body.password(), user.getPassword()));
         if (bcrypt.matches(body.password(), user.getPassword())) {
             return jwtTools.createToken(user);
         } else {
