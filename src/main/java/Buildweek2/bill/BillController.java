@@ -4,6 +4,7 @@ import Buildweek2.bill.Payloads.BillDTO;
 import Buildweek2.bill.Payloads.BillPachDTO;
 import Buildweek2.bill.Payloads.FindByPartialCompanyNameDTO;
 import Buildweek2.exceptions.BadRequestException;
+import Buildweek2.exceptions.NotFoundException;
 import Buildweek2.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,11 @@ public class BillController {
     } else {
       return billService.save(admin.getId(), body);
     }
+  }
+
+  @GetMapping("/{id}")
+  public Bill getBill(@PathVariable Long id) throws NotFoundException {
+    return billService.findById(id);
   }
 
   @GetMapping("")

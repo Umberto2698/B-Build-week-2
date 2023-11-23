@@ -5,6 +5,7 @@ import Buildweek2.bill.Bill;
 import Buildweek2.bill.BillService;
 import Buildweek2.bill.BillState;
 import Buildweek2.bill.Payloads.BillDTO;
+import Buildweek2.bill.Payloads.BillPachDTO;
 import Buildweek2.client.BusinessName;
 import Buildweek2.client.Client;
 import Buildweek2.client.ClientService;
@@ -144,21 +145,21 @@ public class BillsControllerTest {
   //-------------------------GET PAGE BIlls BY ID-------------------------------
   @Test
   public void testgetPagesByClientIdReturn200Ok() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientBill/" + client.getId())
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientBills/" + client.getId())
                     .header("Authorization", "Bearer " + token))
             .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
   }
 
   @Test
   public void testgetPagesByClientIdReturn404() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientbill/" + -2L)
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientBills/" + -2L)
                     .header("Authorization", "Bearer " + token))
             .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
   }
 
   @Test
   public void testgetPagesByClientIdReturn401() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientbill/" + client.getId())
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientBills/" + client.getId())
                     .header("Authorization", "Bearer "))
             .andExpect(MockMvcResultMatchers.status().isUnauthorized()).andDo(print());
   }
@@ -167,7 +168,7 @@ public class BillsControllerTest {
   //-------------------------GET LIST BIllS BY ID-------------------------------
   @Test
   public void testGetBillsListByIdReturn200Ok() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientBillsList/" + client.getId())
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/BillsListByClient/" + client.getId())
                     .header("Authorization", "Bearer " + token))
             .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
   }
@@ -175,7 +176,7 @@ public class BillsControllerTest {
   @Test
   public void testGetBillsListByClientIDreturn404() throws Exception {
     billDTO = new BillDTO(29923L, -1L, "");
-    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientbilllist/" + client.getId())
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/BillsListByClient/" + client.getId())
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", "Bearer " + token))
             .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
@@ -184,7 +185,7 @@ public class BillsControllerTest {
   @Test
   public void testGetBillsListByClientIDreturn401() throws Exception {
     billDTO = new BillDTO(29923L, -1L, "");
-    mockMvc.perform(MockMvcRequestBuilders.get("/bills/clientbilllist/" + client.getId())
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/BillsListByClient/" + client.getId())
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", "Bearer "))
             .andExpect(MockMvcResultMatchers.status().isUnauthorized()).andDo(print());
@@ -223,16 +224,91 @@ public class BillsControllerTest {
   //-------------------------GET BILLs BY DATE-------------------------------
   @Test
   public void testgetBillsperdateReturn200() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsperdate")
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsPerDates?startDate=2019-10-10&endDate=2020-10-10")
                     .header("Authorization", "Bearer " + token))
             .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
   }
 
   @Test
   public void testgetBillsperdateReturn401() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsperdate")
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsPerDates?startDate=2019-10-10&endDate=2020-10-10")
                     .header("Authorization", "Bearer "))
             .andExpect(MockMvcResultMatchers.status().isUnauthorized()).andDo(print());
+  }
+  //-------------------------GET BILLs BY Years-------------------------------
+
+  @Test
+  public void testgetBillsPerYearReturn200() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsPerYear?year=2020")
+                    .header("Authorization", "Bearer " + token))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
+  }
+
+  @Test
+  public void testgetBillsPerYearReturn401() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsPerYear?year=2020")
+                    .header("Authorization", "Bearer "))
+            .andExpect(MockMvcResultMatchers.status().isUnauthorized()).andDo(print());
+  }
+//-------------------------GET BILLs BY Amounts-------------------------------
+
+  @Test
+  public void testgetBillsPerAmountsReturn200() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsPerAmounts?minAmount=2&maxAmount=900000")
+                    .header("Authorization", "Bearer " + token))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
+  }
+
+  @Test
+  public void testgetBillsPerAmountsReturn401() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsPerAmounts?yearminAmount=2&maxAmount=900000")
+                    .header("Authorization", "Bearer "))
+            .andExpect(MockMvcResultMatchers.status().isUnauthorized()).andDo(print());
+  }
+  //-------------------------GET BILLs BY COMPANY NAME-------------------------------
+
+  @Test
+  public void testgetBillsPerCompanyReturn200() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsPerCompany?name=Riva")
+                    .header("Authorization", "Bearer " + token))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
+  }
+
+  @Test
+  public void testgetBillsPerCompanyReturn401() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/bills/billsPerCompany?name=Riva")
+                    .header("Authorization", "Bearer "))
+            .andExpect(MockMvcResultMatchers.status().isUnauthorized()).andDo(print());
+  }//-------------------------PATCH CHANGE BILLS STATES-------------------------------
+
+  @Test
+  public void testChangeStateBillReturn200() throws Exception {
+    String requestBody = objectMapper.writeValueAsString(new BillPachDTO("UNPAID"));
+    mockMvc.perform(MockMvcRequestBuilders.patch("/bills/" + bill.getId())
+                    .header("Authorization", "Bearer " + token)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(String.valueOf(requestBody)))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
+  }
+
+  @Test
+  public void testChangeStateBillReturn401() throws Exception {
+    String requestBody = objectMapper.writeValueAsString(new BillPachDTO("UNPAID"));
+    mockMvc.perform(MockMvcRequestBuilders.patch("/bills/" + bill.getId())
+                    .header("Authorization", "Bearer ")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(String.valueOf(requestBody)))
+            .andExpect(MockMvcResultMatchers.status().isUnauthorized()).andDo(print());
+  }
+
+  @Test
+  public void testChangeStateBillReturn404() throws Exception {
+    String requestBody = objectMapper.writeValueAsString(new BillPachDTO("UNPAID"));
+    mockMvc.perform(MockMvcRequestBuilders.patch("/bills/" + -2L)
+                    .header("Authorization", "Bearer " + token)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(String.valueOf(requestBody)))
+            .andExpect(MockMvcResultMatchers.status().isNotFound()).andDo(print());
   }
 
   //-------------------------DELETE BILL BY ID-------------------------------
