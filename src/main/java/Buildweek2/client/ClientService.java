@@ -59,14 +59,29 @@ public class ClientService {
         found.setCompanyLogo(url);
         return clientRepo.save(found);
     }
-    public List<Client> filterByTurnHover(long startAnnualTurnHover, long endAnnualTurnHover){
-        return clientRepo.filterByTurnHover(startAnnualTurnHover, endAnnualTurnHover).orElseThrow(()-> new NotFoundException("Nessun record per questo fatturato"));
+
+    public List<Client> filterByTurnHover(long startAnnualTurnHover, long endAnnualTurnHover) {
+        if (startAnnualTurnHover <= endAnnualTurnHover) {
+            return clientRepo.filterByTurnHover(startAnnualTurnHover, endAnnualTurnHover).orElseThrow(() -> new NotFoundException("Nessun record per questo fatturato"));
+        } else {
+            return clientRepo.filterByTurnHover(endAnnualTurnHover, startAnnualTurnHover).orElseThrow(() -> new NotFoundException("Nessun record per questo fatturato"));
+        }
     }
-    public List<Client> filterByInsertDate(LocalDate startDate, LocalDate endDate){
-        return clientRepo.filterByInsertDate(startDate,endDate).orElseThrow(()-> new NotFoundException("Nessun record per queste date"));
+
+    public List<Client> filterByInsertDate(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isBefore(endDate)) {
+            return clientRepo.filterByInsertDate(startDate, endDate).orElseThrow(() -> new NotFoundException("Nessun record per queste date"));
+        } else {
+            return clientRepo.filterByInsertDate(endDate, startDate).orElseThrow(() -> new NotFoundException("Nessun record per queste date"));
+        }
     }
-    public List<Client> filterByLastContractDate(LocalDate startDate, LocalDate endDate){
-        return clientRepo.filterByLastContractDate(startDate,endDate).orElseThrow(()-> new NotFoundException("Nessun record per queste date"));
+
+    public List<Client> filterByLastContractDate(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isBefore(endDate)) {
+            return clientRepo.filterByLastContractDate(startDate, endDate).orElseThrow(() -> new NotFoundException("Nessun record per queste date"));
+        } else {
+            return clientRepo.filterByLastContractDate(endDate, startDate).orElseThrow(() -> new NotFoundException("Nessun record per queste date"));
+        }
     }
 
     public List<Client> findByCompanyNameStartingWith(String partialName) {
