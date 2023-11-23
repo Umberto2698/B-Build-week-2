@@ -34,6 +34,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<User> getAllAdmins() {
+        return userRepository.findByRole(UserRole.ADMIN);
+    }
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException(email));

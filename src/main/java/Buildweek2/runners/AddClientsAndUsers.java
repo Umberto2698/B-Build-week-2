@@ -3,7 +3,10 @@ package Buildweek2.runners;
 import Buildweek2.authorization.AuthService;
 import Buildweek2.client.BusinessName;
 import Buildweek2.client.payloads.NewClientDTO;
+import Buildweek2.user.User;
+import Buildweek2.user.UserRole;
 import Buildweek2.user.UserService;
+import Buildweek2.user.payloads.RoleUpdateDTO;
 import Buildweek2.user.payloads.UserDTO;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +33,21 @@ public class AddClientsAndUsers implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (userService.getAllUsers().isEmpty()) {
+            UserDTO admin = new UserDTO("admin", "admin", "admin", "admin@gmail.com", "admin");
+            UserDTO userDTO = new UserDTO("user", "user", "user", "user@gmail.com", "user");
+            authService.save(admin);
+            User user = authService.save(userDTO);
+            authService.updateRole(user.getId(), new RoleUpdateDTO(UserRole.USER.name()));
             int currentYear = LocalDate.now().getYear();
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 18; i++) {
                 String userName = faker.name().firstName();
                 String userSurname = faker.name().lastName();
                 UserDTO randomUser = new UserDTO(userName, userSurname, faker.phoneNumber().cellPhone(), userName + "." + userSurname + "@gmail.com", faker.funnyName().name());
-                authService.save(randomUser);
+                User user1 = authService.save(randomUser);
+                if (i < 9) {
+                    authService.updateRole(user1.getId(), new RoleUpdateDTO(UserRole.USER.name()));
+                }
             }
-            UserDTO randomUser = new UserDTO("admin", "admin", faker.phoneNumber().cellPhone(), "admin@gmail.com", "admin");
             for (int i = 0; i < 80; i++) {
                 String clientName = faker.name().firstName();
                 String clientSurname = faker.name().lastName();

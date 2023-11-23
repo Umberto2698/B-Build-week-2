@@ -45,7 +45,7 @@ public class AddBillsAndAddress implements CommandLineRunner {
         if (billService.getAllBills().isEmpty()) {
             List<Province> provinceList = provincesService.getAllProvinces();
             List<Client> clientList = clientService.getAllClients();
-            List<User> userList = userService.getAllUsers();
+            List<User> userList = userService.getAllAdmins();
             for (Client client : clientList) {
                 int repetition = new Random().nextInt(1, 5);
                 int m = new Random().nextInt(0, userList.size());
