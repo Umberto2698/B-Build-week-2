@@ -37,6 +37,7 @@ public class AddClientsAndUsers implements CommandLineRunner {
                 UserDTO randomUser = new UserDTO(userName, userSurname, faker.phoneNumber().cellPhone(), userName + "." + userSurname + "@gmail.com", faker.funnyName().name());
                 authService.save(randomUser);
             }
+            UserDTO randomUser = new UserDTO("admin", "admin", faker.phoneNumber().cellPhone(), "admin@gmail.com", "admin");
             for (int i = 0; i < 80; i++) {
                 String clientName = faker.name().firstName();
                 String clientSurname = faker.name().lastName();
