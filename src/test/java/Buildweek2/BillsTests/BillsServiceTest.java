@@ -126,6 +126,8 @@ public class BillsServiceTest {
   @Test
   public void testFindByRangeAmountReturnBill() {
     List<Bill> billList = bs.findByRangeAmount(100L, 200009L);
+    System.out.println(bill + "mia");
+    billList.forEach(System.out::println);
     Assertions.assertTrue(billList.contains(bill));
   }
 

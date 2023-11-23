@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 @Getter
@@ -35,6 +36,14 @@ public class Bill {
   @JoinColumn(name = "user_id")
   @JsonIgnore
   private User user;
+
+  @Override
+  public boolean equals(Object object) {
+    if (this == object) return true;
+    if (object == null || getClass() != object.getClass()) return false;
+    Bill bill = (Bill) object;
+    return id == bill.id && amount == bill.amount && number == bill.number && Objects.equals(date, bill.date) && state == bill.state && Objects.equals(client.getId(), bill.client.getId()) && Objects.equals(user.getId(), bill.user.getId());
+  }
 
   @Override
   public String toString() {
