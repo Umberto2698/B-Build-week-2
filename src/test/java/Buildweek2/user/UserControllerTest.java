@@ -190,9 +190,4 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON).content(requestBody))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()).andDo(print());
     }
-
-    @Test
-    public void updateCurrentProfilePictureOk() {
-
-    }
 }
