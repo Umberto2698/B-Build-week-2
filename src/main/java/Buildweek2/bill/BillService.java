@@ -15,10 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.naming.NotContextException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class BillService {
@@ -49,13 +49,19 @@ public class BillService {
     return billRepository.save(body);
   }
 
-  public Page<Bill> getBill(int page, int size, String orderBy) {
+  public Page<Bill> getBill(int page, int size, String orderBy) throws NotContextException {
     Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+    if (pageable.getPageSize() <= 0 || pageable.isUnpaged()) {
+      throw new NotContextException();
+    }
     return billRepository.findAll(pageable);
   }
 
-  public Page<Bill> getBillsByClientId(Long clientId, int page, int size, String orderBy) {
+  public Page<Bill> getBillsByClientId(Long clientId, int page, int size, String orderBy) throws NotContextException {
     Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+    if (pageable.getPageSize() <= 0 || pageable.isUnpaged()) {
+      throw new NotContextException();
+    }
     return billRepository.findByClientId(clientId, pageable);
   }
 
@@ -87,11 +93,22 @@ public class BillService {
     billRepository.delete(found1);
   }
 
-  public List<Bill> billsPaidUnPaid(String state) {
-    if (Objects.equals(state, BillState.PAID.name())) {
-      return billRepository.findByState(BillState.PAID).orElseThrow(() -> new NotFoundException("Value not Found!"));
+  public List<Bill> getPaidBills() throws NotContextException {
+    List<Bill> paidBills = billRepository.findByState(BillState.PAID);
+    if (paidBills.isEmpty()) {
+      throw new NotContextException();
     } else {
-      return billRepository.findByState(BillState.UNPAID).orElseThrow(() -> new NotFoundException("Value not Found!"));
+      return paidBills;
+    }
+
+  }
+
+  public List<Bill> getUnpaidBills() throws NotContextException {
+    List<Bill> paidBills = billRepository.findByState(BillState.UNPAID);
+    if (paidBills.isEmpty()) {
+      throw new NotContextException();
+    } else {
+      return paidBills;
     }
   }
 

@@ -24,81 +24,86 @@ import java.util.Date;
 
 @Service
 public class AuthService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private JWTTools jwtTools;
-    @Autowired
-    private PasswordEncoder bcrypt;
-    @Autowired
-    private ClientRepository clientRepo;
+  @Autowired
+  private UserRepository userRepository;
+  @Autowired
+  private UserService userService;
+  @Autowired
+  private JWTTools jwtTools;
+  @Autowired
+  private PasswordEncoder bcrypt;
+  @Autowired
+  private ClientRepository clientRepo;
 
-    public String authenticateUser(UserLoginDTO body) {
-        User user = userService.findByEmail(body.email());
-        if (bcrypt.matches(body.password(), user.getPassword())) {
-            return jwtTools.createToken(user);
-        } else {
-            throw new UnauthorizedException("Email or password invalid.");
-        }
+  public String authenticateUser(UserLoginDTO body) {
+    User user = userService.findByEmail(body.email());
+    if (bcrypt.matches(body.password(), user.getPassword())) {
+      return jwtTools.createToken(user);
+    } else {
+      throw new UnauthorizedException("Email or password invalid.");
     }
+  }
 
-    public User save(UserDTO body) {
-        userRepository.findByEmail(body.email()).ifPresent(a -> {
-            throw new BadRequestException("The email" + a.getEmail() + " is alredy used.");
-        });
-        User user;
-        if (body.username() != null) {
-            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.username()).avatarUrl("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname()).build();
-        } else {
-            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.name()).avatarUrl("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname()).build();
-        }
-        return userRepository.save(user);
-    }
 
-    public User update(long id, UserUpdateInfoDTO body) {
-        User found = userService.getById(id);
-        if (body.email() != null) {
-            found.setEmail(body.email());
-        }
-        if (body.name() != null) {
-            found.setName(body.name());
-        }
-        if (body.surname() != null) {
-            found.setSurname(body.surname());
-        }
-        if (body.password() != null) {
-            found.setPassword(bcrypt.encode(body.password()));
-        }
-        return userRepository.save(found);
+  public User save(UserDTO body) {
+    userRepository.findByEmail(body.email()).ifPresent(a -> {
+      throw new BadRequestException("The email " + a.getEmail() + " is alredy used.");
+    });
+    User user;
+    if (body.username() != null) {
+      user = User.builder().name(body.name()).email(body.email()).surname(body.surname())
+              .password(bcrypt.encode(body.password())).username(body.username()).build();
+    } else {
+      user = User.builder().name(body.name()).email(body.email()).surname(body.surname())
+              .password(bcrypt.encode(body.password())).username(body.name()).build();
     }
+    return userRepository.save(user);
+  }
 
-    public User updateRole(long id, RoleUpdateDTO body) {
-        User found = userService.getById(id);
-        found.setRole(UserRole.valueOf(body.role()));
-        return userRepository.save(found);
+  public User update(long id, UserUpdateInfoDTO body) {
+    User found = userService.getById(id);
+    if (!body.email().isEmpty()) {
+      found.setEmail(body.email());
     }
+    if (!body.name().isEmpty()) {
+      found.setName(body.name());
+    }
+    if (!body.surname().isEmpty()) {
+      found.setSurname(body.surname());
+    }
+    if (!body.password().isEmpty()) {
+      found.setPassword(bcrypt.encode(body.password()));
+    }
+    return userRepository.save(found);
+  }
 
-    public Client save(NewClientDTO body) {
-        Client newClient;
-        if (body.insertDate() != null && body.lastContractDate() != null) {
-            newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
-                    .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
-                    .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(body.insertDate()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(body.lastContractDate()).build();
-        } else if (body.insertDate() == null && body.lastContractDate() != null) {
-            newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
-                    .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
-                    .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(new Date()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(body.lastContractDate()).build();
-        } else if (body.insertDate() != null && body.lastContractDate() == null) {
-            newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
-                    .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
-                    .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(body.insertDate()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(LocalDate.now()).build();
-        } else {
-            newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
-                    .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
-                    .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(new Date()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(LocalDate.now()).build();
-        }
-        return clientRepo.save(newClient);
+  public User updateRole(long id, RoleUpdateDTO body) {
+    User found = userService.getById(id);
+    found.setRole(UserRole.valueOf(body.role()));
+    return userRepository.save(found);
+  }
+
+
+  public Client save(NewClientDTO body) {
+    Client newClient;
+    if (body.insertDate() != null && body.lastContractDate() != null) {
+      newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
+              .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
+              .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(body.insertDate()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(body.lastContractDate()).build();
+    } else if (body.insertDate() == null && body.lastContractDate() != null) {
+      newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
+              .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
+              .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(new Date()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(body.lastContractDate()).build();
+    } else if (body.insertDate() != null && body.lastContractDate() == null) {
+      newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
+              .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
+              .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(body.insertDate()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(LocalDate.now()).build();
+    } else {
+      newClient = Client.builder().companyName(body.companyName()).companyLogo(body.companyLogo()).contactPhone(body.contactPhone()).phone(body.phone())
+              .contactName(body.contactName()).contactSurname(body.contactSurname()).contactEmail(body.contactEmail()).annualTurnHover(body.annualTurnHover())
+              .pec(body.pec()).VATNumber(body.VATNumber()).insertDate(new Date()).businessName(BusinessName.valueOf(body.businessName())).lastContractDate(LocalDate.now()).build();
     }
+    clientRepo.save(newClient);
+    return newClient;
+  }
 }
