@@ -74,7 +74,7 @@ public class ClientServiceTest {
 
     @Test
     public void FilterByAnnualTurnHover() {
-        int foundSize = clientService.filterByTurnHover(73945629011L).size();
+        int foundSize = clientService.filterByTurnHover(73945629011L, 93945629011L).size();
         Assertions.assertEquals(1, foundSize);
     }
 
