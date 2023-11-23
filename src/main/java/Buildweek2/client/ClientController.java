@@ -36,6 +36,7 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Client getSingleClient(@PathVariable("id") long id) {
         return clientService.getSingleClient(id);
     }
@@ -61,16 +62,19 @@ public class ClientController {
     public Client updateProfilePicture(@RequestParam("avatar") MultipartFile body, @AuthenticationPrincipal User currentUser) throws IOException {
         return clientService.uploadLogo(body, currentUser.getId());
     }
+
     @GetMapping("/turnhover")
-    public List<Client> getByTurnHover(@RequestParam("startAmount") long startAmount, @RequestParam("endAmount") long endAmount){
+    public List<Client> getByTurnHover(@RequestParam("startAmount") long startAmount, @RequestParam("endAmount") long endAmount) {
         return clientService.filterByTurnHover(startAmount, endAmount);
     }
+
     @GetMapping("/date")
-    public List<Client> getByRangeInsertDate(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate){
+    public List<Client> getByRangeInsertDate(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
         return clientService.filterByInsertDate(startDate, endDate);
     }
+
     @GetMapping("/lastcontract")
-    public List<Client> getByRangeLastContract(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate){
+    public List<Client> getByRangeLastContract(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
         return clientService.filterByLastContractDate(startDate, endDate);
     }
 
