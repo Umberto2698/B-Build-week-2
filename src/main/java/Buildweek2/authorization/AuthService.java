@@ -49,26 +49,26 @@ public class AuthService {
             throw new BadRequestException("The email" + a.getEmail() + " is alredy used.");
         });
         User user;
-        if (!body.username().isEmpty()) {
-            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.username()).build();
+        if (body.username() != null) {
+            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.username()).avatarUrl("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname()).build();
         } else {
-            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.name()).build();
+            user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).username(body.name()).avatarUrl("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.surname()).build();
         }
         return userRepository.save(user);
     }
 
     public User update(long id, UserUpdateInfoDTO body) {
         User found = userService.getById(id);
-        if (!body.email().isEmpty()) {
+        if (body.email() != null) {
             found.setEmail(body.email());
         }
-        if (!body.name().isEmpty()) {
+        if (body.name() != null) {
             found.setName(body.name());
         }
-        if (!body.surname().isEmpty()) {
+        if (body.surname() != null) {
             found.setSurname(body.surname());
         }
-        if (!body.password().isEmpty()) {
+        if (body.password() != null) {
             found.setPassword(bcrypt.encode(body.password()));
         }
         return userRepository.save(found);
