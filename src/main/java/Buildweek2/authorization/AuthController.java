@@ -4,12 +4,11 @@ import Buildweek2.client.Client;
 import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.user.User;
-import Buildweek2.user.payloads.*;
+import Buildweek2.user.payloads.UserDTO;
+import Buildweek2.user.payloads.UserLoginDTO;
+import Buildweek2.user.payloads.UserSuccessLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,32 +33,7 @@ public class AuthController {
             return authService.save(body);
         }
     }
-
-    @PutMapping("/role/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public User updateRole(@PathVariable long id, @RequestBody @Validated RoleUpdateDTO body, BindingResult validation) {
-        if (validation.hasErrors()) {
-            throw new BadRequestException("", validation.getAllErrors());
-        } else {
-            return authService.updateRole(id, body);
-        }
-    }
-
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public User updateUserInfo(@PathVariable long id, @RequestBody @Validated UserUpdateInfoDTO body, BindingResult validation) {
-        if (validation.hasErrors()) {
-            throw new BadRequestException("", validation.getAllErrors());
-        } else {
-            return authService.update(id, body);
-        }
-    }
-
-    @PutMapping("/me")
-    public UserDetails updateProfile(@AuthenticationPrincipal User currentUser, @RequestBody UserUpdateInfoDTO body) {
-        return authService.update(currentUser.getId(), body);
-    }
-
+    
     @PostMapping("/client")
     @ResponseStatus(HttpStatus.CREATED)
     public Client saveClient(@RequestBody @Validated NewClientDTO body, BindingResult validation) {

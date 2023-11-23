@@ -1,10 +1,17 @@
 package Buildweek2.user;
 
+import Buildweek2.authorization.AuthService;
+import Buildweek2.exceptions.BadRequestException;
+import Buildweek2.user.payloads.RoleUpdateDTO;
+import Buildweek2.user.payloads.UserUpdateInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +23,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthService authService;
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -50,6 +60,32 @@ public class UserController {
         return userService.uploadPicture(body, id);
     }
 
+    @PutMapping("/role/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public User updateRole(@PathVariable long id, @RequestBody @Validated RoleUpdateDTO body, BindingResult validation) {
+        if (validation.hasErrors()) {
+            throw new BadRequestException("", validation.getAllErrors());
+        } else {
+            return authService.updateRole(id, body);
+        }
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public User updateUserInfo(@PathVariable long id, @RequestBody @Validated UserUpdateInfoDTO body, BindingResult validation) {
+        if (validation.hasErrors()) {
+            throw new BadRequestException("", validation.getAllErrors());
+        } else {
+            return authService.update(id, body);
+        }
+    }
+
+    @PutMapping("/me")
+    public UserDetails updateProfile(@AuthenticationPrincipal User currentUser, @RequestBody UserUpdateInfoDTO body) {
+        return authService.update(currentUser.getId(), body);
+    }
+
+
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     public User getProfile(@AuthenticationPrincipal User currentUser) {
@@ -63,6 +99,7 @@ public class UserController {
     }
 
     @PatchMapping("/upload/me")
+    @ResponseStatus(HttpStatus.OK)
     public User updateProfilePicture(@RequestParam("avatar") MultipartFile body, @AuthenticationPrincipal User currentUser) throws IOException {
         return userService.uploadPicture(body, currentUser.getId());
     }
