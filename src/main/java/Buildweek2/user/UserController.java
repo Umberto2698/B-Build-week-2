@@ -98,7 +98,7 @@ public class UserController {
         userService.delete(currentUser.getId());
     }
 
-    @PatchMapping("/upload/me")
+    @PostMapping("/upload/me")
     @ResponseStatus(HttpStatus.OK)
     public User updateProfilePicture(@RequestParam("avatar") MultipartFile body, @AuthenticationPrincipal User currentUser) throws IOException {
         return userService.uploadPicture(body, currentUser.getId());
