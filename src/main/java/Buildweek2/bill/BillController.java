@@ -19,84 +19,84 @@ import java.util.List;
 @RequestMapping("/bills")
 
 public class BillController {
-    @Autowired
-    private BillService billService;
+  @Autowired
+  private BillService billService;
 
-    @GetMapping("")
-    public Page<Bill> getBill(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "10") int size,
-                              @RequestParam(defaultValue = "id") String orderBy) {
-        return billService.getBill(page, size, orderBy);
+  @GetMapping("")
+  public Page<Bill> getBill(@RequestParam(defaultValue = "0") int page,
+                            @RequestParam(defaultValue = "10") int size,
+                            @RequestParam(defaultValue = "id") String orderBy) {
+    return billService.getBill(page, size, orderBy);
+  }
+
+  @GetMapping("/clientbill/{id}")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public Page<Bill> getBillsByClientId(@PathVariable("id") long id, @RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "10") int size,
+                                       @RequestParam(defaultValue = "id") String orderBy) {
+    return billService.getBillsByClientId(id, page, size, orderBy);
+  }
+
+  @GetMapping("/clientbilllist/{id}")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public List<Bill> getBillsListForClientId(@PathVariable("id") long id) {
+    return billService.getBillsListForClient(id);
+  }
+
+  @PostMapping("/{id}")
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  public Bill save(@PathVariable long userId, @RequestBody @Validated BillDTO body, BindingResult validation) {
+    if (validation.hasErrors()) {
+      throw new BadRequestException("", validation.getAllErrors());
+    } else {
+      return billService.save(userId, body);
     }
+  }
 
-    @GetMapping("/clientbill/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public Page<Bill> getBillsByClientId(@PathVariable("id") long id, @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size,
-                                         @RequestParam(defaultValue = "id") String orderBy) {
-        return billService.getBillsByClientId(id, page, size, orderBy);
+  @DeleteMapping("/{id}")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
+  public void findAndDeleteById(@PathVariable long id) {
+    billService.findAndDeleteById(id);
+  }
+
+  @PatchMapping("/{id}")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public Bill changeStateBill(@PathVariable long id, @RequestBody @Validated BillPachDTO body, BindingResult validation) {
+    if (validation.hasErrors()) {
+      throw new BadRequestException(" ", validation.getAllErrors());
     }
+    return billService.changeStateBill(id, body);
+  }
 
-    @GetMapping("/clientbilllist/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsListForClientId(@PathVariable("id") long id) {
-        return billService.getBillsListForClient(id);
-    }
+  @GetMapping("/billpaidunpaid")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public List<Bill> getBillsByPaidUnpaid(@RequestParam("state") String state) {
 
-    @PostMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public Bill save(@PathVariable long userId, @RequestBody @Validated BillDTO body, BindingResult validation) {
-        if (validation.hasErrors()) {
-            throw new BadRequestException("", validation.getAllErrors());
-        } else {
-            return billService.save(userId, body);
-        }
-    }
+    return billService.billsPaidUnPaid(state);
+  }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // <-- 204 NO CONTENT
-    public void findAndDeleteById(@PathVariable int id) {
-        billService.findAndDeleteById(id);
-    }
+  @GetMapping("/billperdate")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public List<Bill> getBillsByDate(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
+    return billService.getBillsByDate(startDate, endDate);
+  }
 
-    @PatchMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public Bill changeStateBill(@PathVariable int id, @RequestBody @Validated BillPachDTO body, BindingResult validation) {
-        if (validation.hasErrors()) {
-            throw new BadRequestException(" ", validation.getAllErrors());
-        }
-        return billService.changeStateBill(id, body);
-    }
+  @GetMapping("/billperyears")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public List<Bill> getBillsByYears(@RequestParam("year") int year) {
+    return billService.getBillsByYear(year);
+  }
 
-    @GetMapping("/billpaidunpaid")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByPaidUnpaid(@RequestParam("state")  String state) {
+  @GetMapping("/billsperamounts")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public List<Bill> getBillsByAmounts(@RequestParam("minAmount") Long minAmount, @RequestParam("maxAmount") Long maxAmount) {
+    return billService.findByRangeAmount(minAmount, maxAmount);
+  }
 
-        return billService.billsPaidUnPaid(state);
-    }
-
-    @GetMapping("/billperdate")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByDate(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
-        return billService.getBillsByDate(startDate, endDate);
-    }
-
-    @GetMapping("/billperyears")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByYears(@RequestParam("year") int year) {
-        return billService.getBillsByYear(year);
-    }
-
-    @GetMapping("/billsperamounts")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByAmounts(@RequestParam("minAmount") Long minAmount, @RequestParam("maxAmount") Long maxAmount) {
-        return billService.findByRangeAmount(minAmount, maxAmount);
-    }
-
-    @GetMapping("/billspercompany")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public FindByPartialCompanyNameDTO getBillsByPartialCompanyName(@RequestParam("name") String name) {
-        return billService.findByPartialCompanyName(name);
-    }
+  @GetMapping("/billspercompany")
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public FindByPartialCompanyNameDTO getBillsByPartialCompanyName(@RequestParam("name") String name) {
+    return billService.findByPartialCompanyName(name);
+  }
 }
