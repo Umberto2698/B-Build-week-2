@@ -11,7 +11,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.naming.NotContextException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,9 +44,21 @@ public class ExceptionsHandler {
     return new ErrorsResponseDTO(e.getMessage(), new Date());
   }
 
+  @ExceptionHandler(NotContextException.class)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public ErrorsResponseDTO handleNotContent(NotContextException e) {
+    return new ErrorsResponseDTO(e.getMessage(), new Date());
+  }
+
   @ExceptionHandler(HttpMessageNotReadableException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorsResponseDTO handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    return new ErrorsResponseDTO(e.getMessage(), new Date());
+  }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ErrorsResponseDTO handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
     return new ErrorsResponseDTO(e.getMessage(), new Date());
   }
 

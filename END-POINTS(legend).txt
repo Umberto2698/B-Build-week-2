@@ -4,15 +4,15 @@ END-POINTS(legend)
 
 {{BillsUNPAID}} = Request that returns all unpaid bills and select GET command.
 
-{{BillsperData}} = Request that returns all bills within that time period. NOTE: Include startDate=(YYYY-MM-DD)&endDate=(YYYY-MM-DD) and select GET command.
+{{BillsPerDates}} = Request that returns all bills within that time period. NOTE: Include startDate=(YYYY-MM-DD)&endDate=(YYYY-MM-DD) & select GET command.
 
-{{BillsperYears}} = Request that returns all bills for the requested year. NOTE: Include (YYYY) and select GET command.
+{{BillsPerYear}} = Request that returns all bills for the requested year. NOTE: Include (YYYY) and select GET command.
 
-{{BillsperAmounts}} = Request that retrieves all bills within a specified amount range. NOTE: Please include minAmount=(ex. 0) and maxAmount=(ex. 100000) and select GET command.
+{{BillsPerAmounts}} = Request that retrieves all bills within a specified amount range. NOTE: Please include minAmount=(ex. 0) & maxAmount=(ex. 100000) and select GET command.
 
-{{BillsperCompany}} = Request that retrieves all bills from the desired company. NOTE: Please include the company name, ex. Franco Rossi SPA and select GET command.
+{{BillsPerCompany}} = Request that retrieves all bills from the desired company. NOTE: Please include the company name, ex. Franco Rossi SPA and select GET command.
 
-{{BillsperIdClients}} = Request that retrieves all bills from the desired id_client.  NOTE: Please include the id_client number, ex. 1 and select GET command.
+{{BillsListByClient}} = Request that retrieves all bills from the desired id_client.  NOTE: Please include the id_client number, ex. 1 and select GET command.
 
 {{AllClientPage}} = Request that retrieves all Clients NOTE: Please select GET command.
 

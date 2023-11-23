@@ -11,6 +11,7 @@ import Buildweek2.client.Client;
 import Buildweek2.client.ClientService;
 import Buildweek2.client.payloads.NewClientDTO;
 import Buildweek2.exceptions.NotFoundException;
+import Buildweek2.security.JWTTools;
 import Buildweek2.user.User;
 import Buildweek2.user.UserRole;
 import Buildweek2.user.UserService;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -27,13 +29,14 @@ import java.util.List;
 
 @SpringBootTest
 public class BillsServiceTest {
+  @MockBean
+  JWTTools jwtTools;
   @Autowired
   ClientService cs;
   @Autowired
-  AuthService ats;
-  @Autowired
   UserService us;
-
+  @Autowired
+  AuthService ats;
   @Autowired
   BillService bs;
   private Client client;
