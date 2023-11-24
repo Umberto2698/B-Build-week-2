@@ -3,6 +3,7 @@ package Buildweek2.bill;
 import Buildweek2.bill.Payloads.BillDTO;
 import Buildweek2.bill.Payloads.BillPachDTO;
 import Buildweek2.bill.Payloads.FindByPartialCompanyNameDTO;
+import Buildweek2.client.Client;
 import Buildweek2.exceptions.BadRequestException;
 import Buildweek2.exceptions.NotFoundException;
 import Buildweek2.user.User;
@@ -62,10 +63,10 @@ public class BillController {
         return billService.getBillsListForClient(id);
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/myClient")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsFromUserId(@PathVariable("userId") long userId) {
-        return billService.getBillsFromUserId(userId);
+    public List<Client> getBillsFromUserId(@AuthenticationPrincipal User currentUser) {
+        return billService.getClientFromUserId(currentUser.getId());
     }
 
     @GetMapping("/paidBills")

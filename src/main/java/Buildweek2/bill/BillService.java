@@ -73,6 +73,17 @@ public class BillService {
         return billRepository.findByUserId(userId);
     }
 
+    public List<Client> getClientFromUserId(long userId) {
+        List<Bill> bills = this.getBillsFromUserId(userId);
+        List<Client> clientList = new ArrayList<>();
+        for (Bill bill : bills) {
+            if (!clientList.contains(bill.getClient())) {
+                clientList.add(bill.getClient());
+            }
+        }
+        return clientList;
+    }
+
     public List<Bill> getAllBills() {
         return billRepository.findAll();
     }

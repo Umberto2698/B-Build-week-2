@@ -34,6 +34,7 @@ public class ClientService {
         return clientRepo.findAll();
     }
 
+
     public Client getSingleClient(long id) {
         return clientRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
