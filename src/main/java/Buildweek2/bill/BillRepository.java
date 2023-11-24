@@ -27,7 +27,6 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
 
     @Query("SELECT b FROM Bill b WHERE b.amount BETWEEN :minAmount AND :maxAmount")
     Optional<List<Bill>> findByRangeAmount(@Param("minAmount") Long minAmount, @Param("maxAmount") Long maxAmount);
-
-    @Query("SELECT b.id FROM Bill b WHERE user.id LIKE :id")
-    List<Bill> findByUserId(@Param("id") long id);
+    
+    List<Bill> findByUserId(Long userId);
 }

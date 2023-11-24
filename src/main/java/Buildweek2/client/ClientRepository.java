@@ -22,7 +22,4 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Query("SELECT c FROM Client c WHERE LOWER(c.companyName) LIKE LOWER(CONCAT('%', :partialName, '%'))")
     Optional<List<Client>> filterByPartialName(@Param("partialName") String partialToSearch);
-
-//    @Query("SELECT c FROM Client c WHERE bills.id IN ()")
-//    List<Client> ClientFromUserId(@Param("id") long id);
 }
