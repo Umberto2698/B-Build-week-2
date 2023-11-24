@@ -65,8 +65,14 @@ public class BillController {
 
     @GetMapping("/myClient")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Client> getBillsFromUserId(@AuthenticationPrincipal User currentUser) {
+    public List<Client> getClientsFromUserId(@AuthenticationPrincipal User currentUser) {
         return billService.getClientFromUserId(currentUser.getId());
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Bill> getBillsFromUserId(@AuthenticationPrincipal User currentUser) {
+        return billService.getBillsFromUserId(currentUser.getId());
     }
 
     @GetMapping("/paidBills")
