@@ -34,9 +34,9 @@ public class ClientService {
         return clientRepo.findAll();
     }
 
-    public List<Client> getClientFromUserId(long userId) {
-        return clientRepo.ClientFromUserId(userId);
-    }
+//    public List<Client> getClientFromUserId(long userId) {
+//        return clientRepo.ClientFromUserId(userId);
+//    }
 
     public Client getSingleClient(long id) {
         return clientRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
