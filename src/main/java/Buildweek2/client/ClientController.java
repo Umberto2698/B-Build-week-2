@@ -41,6 +41,12 @@ public class ClientController {
         return clientService.getSingleClient(id);
     }
 
+    @GetMapping("/:{userId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Client getSingleClent(@PathVariable("userId") long userId) {
+        return clientService.getSingleClient(userId);
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)

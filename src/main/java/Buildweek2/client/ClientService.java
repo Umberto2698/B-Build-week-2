@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,6 +32,10 @@ public class ClientService {
 
     public List<Client> getAllClients() {
         return clientRepo.findAll();
+    }
+
+    public List<Client> getClientFromUserId(long userId) {
+        return clientRepo.ClientFromUserId(userId);
     }
 
     public Client getSingleClient(long id) {
@@ -85,9 +90,13 @@ public class ClientService {
     }
 
     public List<Client> findByCompanyNameStartingWith(String partialName) {
-        List<Client> clientList = clientRepo.filterByPartialName(partialName).orElseThrow(() -> new NotFoundException("No company with this name."));
-        System.out.println(clientList.size());
-        clientList.forEach(System.out::println);
-        return clientList;
+        if (partialName.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            List<Client> clientList = clientRepo.filterByPartialName(partialName).orElseThrow(() -> new NotFoundException("No company with this name."));
+            System.out.println(clientList.size());
+            clientList.forEach(System.out::println);
+            return clientList;
+        }
     }
 }
